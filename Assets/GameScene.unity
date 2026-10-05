@@ -737,7 +737,6 @@ MonoBehaviour:
     content: 'do not read '
   - speaker: Player!
     content: wow
-  prompt: {fileID: 0}
 --- !u!58 &1656853462
 CircleCollider2D:
   m_ObjectHideFlags: 0
