@@ -1,0 +1,165 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class DialogueManager : MonoBehaviour
+{
+    public static DialogueManager Instance { get; private set; }
+
+    [Header("对话 UI")]
+    [SerializeField] private GameObject dialoguePanel;
+    [SerializeField] private TMP_Text speakerText;
+    [SerializeField] private TMP_Text contentText;
+    [SerializeField] private TMP_Text clickHint;
+
+    [Header("玩家")]
+    [SerializeField] private PlayerMovement playerMovement;
+
+    private DialogueLine[] currentLines;
+    private int currentIndex;
+
+    public bool IsOpen { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        IsOpen = false;
+
+        if (playerMovement == null)
+        {
+            playerMovement = FindFirstObjectByType<PlayerMovement>();
+        }
+
+        if (dialoguePanel != null)
+        {
+            dialoguePanel.SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        if (!IsOpen)
+        {
+            return;
+        }
+
+        bool nextPressed =
+            (Mouse.current != null &&
+             Mouse.current.leftButton.wasPressedThisFrame) ||
+            (Keyboard.current != null &&
+             Keyboard.current.spaceKey.wasPressedThisFrame);
+
+        if (nextPressed)
+        {
+            ShowNextLine();
+        }
+    }
+
+    public void StartDialogue(DialogueLine[] lines)
+    {
+        if (lines == null || lines.Length == 0)
+        {
+            Debug.LogWarning("InteractionTrigger 没有设置对话内容。");
+            return;
+        }
+
+        currentLines = lines;
+        currentIndex = 0;
+        IsOpen = true;
+
+        SetPlayerMovementLocked(true);
+
+        if (dialoguePanel != null)
+        {
+            dialoguePanel.SetActive(true);
+        }
+
+        ShowCurrentLine();
+    }
+
+    private void ShowCurrentLine()
+    {
+        if (currentLines == null ||
+            currentIndex >= currentLines.Length)
+        {
+            EndDialogue();
+            return;
+        }
+
+        DialogueLine line = currentLines[currentIndex];
+
+        if (speakerText != null)
+        {
+            speakerText.text = line.speaker;
+        }
+
+        if (contentText != null)
+        {
+            contentText.text = line.content;
+        }
+
+        if (clickHint != null)
+        {
+            clickHint.text = "点击继续";
+        }
+    }
+
+    private void ShowNextLine()
+    {
+        currentIndex++;
+
+        if (currentIndex >= currentLines.Length)
+        {
+            EndDialogue();
+            return;
+        }
+
+        ShowCurrentLine();
+    }
+
+    public void EndDialogue()
+    {
+        IsOpen = false;
+        currentLines = null;
+        currentIndex = 0;
+
+        SetPlayerMovementLocked(false);
+
+        if (dialoguePanel != null)
+        {
+            dialoguePanel.SetActive(false);
+        }
+    }
+
+    private void SetPlayerMovementLocked(bool locked)
+    {
+        if (playerMovement == null)
+        {
+            playerMovement = FindFirstObjectByType<PlayerMovement>();
+        }
+
+        if (playerMovement != null)
+        {
+            playerMovement.SetMovementLocked(locked);
+        }
+        else
+        {
+            Debug.LogWarning("DialogueManager 没有找到 PlayerMovement。");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            SetPlayerMovementLocked(false);
+            Instance = null;
+        }
+    }
+}
