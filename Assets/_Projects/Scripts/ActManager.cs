@@ -8,6 +8,7 @@ public class ActManager : MonoBehaviour
     [SerializeField] private Color duskColor;
     public Rigidbody2D playerRigidbody;
     public Transform duskSpawnPoint;
+    public GameMenuController gameMenuController;
 
     private enum sceneState
     {
@@ -27,7 +28,7 @@ public class ActManager : MonoBehaviour
     void Update()
     {
         Keyboard keyboard = Keyboard.current;//获取键盘输入引用
-        if (keyboard == null) return;
+        if (keyboard == null || gameMenuController.isMenuActive) return;
         if(keyboard.nKey.wasPressedThisFrame)
         {
             EnterDusk();//按下N键切换到黄昏场景
