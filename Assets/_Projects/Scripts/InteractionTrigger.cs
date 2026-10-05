@@ -4,20 +4,15 @@ using UnityEngine.InputSystem;
 public class InteractionTrigger : MonoBehaviour
 {
     [SerializeField] private DialogueLine[] dialogueLines;
-    [SerializeField] private GameObject prompt;
 
     private bool playerInside;
 
     // 玩家本次运行中是否已经完成过第一次交互
     private bool hasInteracted;
 
-    private void Start()
-    {
-        if (prompt != null)
-        {
-            prompt.SetActive(false);
-        }
-    }
+    // 提示（Press E to react）由场景里唯一的 InteractionPromptUI 统一管理：
+    // 这里只需要"申请显示"或"归还"，不用再手动拖 prompt 引用。
+    // 场景里可以有很多个 InteractionTrigger，它们共用同一个提示，先到先得。
 
     private void Update()
     {
@@ -25,6 +20,7 @@ public class InteractionTrigger : MonoBehaviour
 
         if (dialogueManager == null)
         {
+            InteractionPromptUI.Hide(this);
             return;
         }
 
@@ -37,9 +33,13 @@ public class InteractionTrigger : MonoBehaviour
             canInteract &&
             !hasInteracted;
 
-        if (prompt != null)
+        if (shouldShowPrompt)
         {
-            prompt.SetActive(shouldShowPrompt);
+            InteractionPromptUI.Show(this, transform);
+        }
+        else
+        {
+            InteractionPromptUI.Hide(this);
         }
 
         if (!canInteract)
@@ -59,10 +59,7 @@ public class InteractionTrigger : MonoBehaviour
             // 第一次或之后再次按 E，都从第一句开始
             hasInteracted = true;
 
-            if (prompt != null)
-            {
-                prompt.SetActive(false);
-            }
+            InteractionPromptUI.Hide(this);
 
             dialogueManager.StartDialogue(dialogueLines);
         }
@@ -82,10 +79,7 @@ public class InteractionTrigger : MonoBehaviour
         {
             playerInside = false;
 
-            if (prompt != null)
-            {
-                prompt.SetActive(false);
-            }
+            InteractionPromptUI.Hide(this);
         }
     }
 }
