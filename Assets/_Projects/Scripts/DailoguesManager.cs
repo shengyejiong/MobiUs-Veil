@@ -158,7 +158,10 @@ public class DialogueManager : MonoBehaviour
     {
         if (Instance == this)
         {
-            SetPlayerMovementLocked(false);
+            if(playerMovement != null)
+            {
+                SetPlayerMovementLocked(false);
+            }
             Instance = null;
         }
     }
