@@ -5,11 +5,14 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// 第二幕墙钟机关（白盒版）
 ///
-///   按 E → 打开时钟面板 → 三个预设时间（22:30 / 22:47 / 23:00）
-///   选 22:47 → 钟响 + 门解锁 + 主角台词
-///   选错   → 提示"那不是我们约好的时间。"，可以立刻重试
+///   ① 按 E → 打开时钟面板 → 三个预设时间（22:30 / 22:47 / 23:00）
+///      选 22:47 → 钟响 + 门解锁 + 主角台词
+///      选错   → 提示"那不是我们约好的时间。"，可以立刻重试
+///   ② 解开之后再按 E → 取下这只小挂钟（白盒：直接拿走）
+///      拿走 → 隐藏钟体、GameProgress 记录为"在背包"
 ///
-/// 还没做 UI 也能测：把 Clock Panel 留空，按 E 后用键盘 1 / 2 / 3 选择（Q 取消）。
+/// 道具状态统一由 GameProgress（数据层）管理，这里只管表现。
+/// 还没做 UI 也能测：Clock Panel 留空时，按 E 后用键盘 1 / 2 / 3 选择（Q 取消）。
 /// </summary>
 public class ClockPuzzle : MonoBehaviour
 {
@@ -26,6 +29,16 @@ public class ClockPuzzle : MonoBehaviour
     [SerializeField] private AudioClip unlockClip;
     [SerializeField] private DialogueLine[] successLines;
 
+    [Header("取钟（白盒：直接拿走）")]
+    [Tooltip("拿走之后要隐藏的物体（拖 WallClock）。留空 = 隐藏自己的父物体")]
+    [SerializeField] private GameObject clockBodyToHide;
+
+    [Tooltip("白盒：勾上 = 解开后按E直接拿走；以后做【拿走/暂时不拿】面板时改成 false")]
+    [SerializeField] private bool autoTake = true;
+
+    [SerializeField] private DialogueLine[] takeLines;            // 拿走时的文本
+    [SerializeField] private DialogueLine[] afterSolveLookLines;  // 解开但还没拿时按 E 的提示
+
     [Header("文字")]
     [SerializeField] private string promptText = "把时间拨到她原定报平安的那一刻。";
     [SerializeField] private string wrongText = "那不是我们约好的时间。";
@@ -41,8 +54,13 @@ public class ClockPuzzle : MonoBehaviour
     private bool playerInside;
     private bool wasDialogueOpen;
     private bool successPending;
+    private bool takePending;      // 对话结束后隐藏钟体
     private bool keyboardChoosing;
     private int hintIndex;
+
+    /// <summary>挂钟是否已经不在墙上了（在背包里或已放到底座）。</summary>
+    private static bool ClockTaken
+        => GameProgress.GetState(StoryItemId.Clock) != StoryItemState.Uncollected;
 
     private void Update()
     {
@@ -74,8 +92,9 @@ public class ClockPuzzle : MonoBehaviour
             return;
         }
 
-        // 解开之后不再需要交互（以后要"取钟"就用 PickupItem，不走这里）
-        bool canInteract = playerInside && !dm.IsOpen && !Act02Story.ClockSolved;
+        // 钟已经拿走了 → 这里没事可做了
+        bool hasSomethingToDo = !ClockTaken;
+        bool canInteract = playerInside && !dm.IsOpen && hasSomethingToDo;
 
         if (canInteract) InteractionPromptUI.Show(this, transform);
         else InteractionPromptUI.Hide(this);
@@ -86,12 +105,55 @@ public class ClockPuzzle : MonoBehaviour
 
         if (canPress && Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
         {
-            OpenPanel();
+            Interact(dm);
         }
 
         bool isOpen = dm.IsOpen;
         if (wasDialogueOpen && !isOpen) OnDialogueFinished();
         wasDialogueOpen = isOpen;
+    }
+
+    // ================= 交互 =================
+
+    private void Interact(DialogueManager dm)
+    {
+        // ① 还没解开：开面板调时间
+        if (!Act02Story.ClockSolved)
+        {
+            OpenPanel();
+            return;
+        }
+
+        // ② 解开了、钟还在墙上：取钟
+        if (ClockTaken)
+        {
+            dm.StartDialogue(afterSolveLookLines);
+            return;
+        }
+
+        if (!autoTake)
+        {
+            // 以后这里接【拿走】【暂时不拿】面板
+            dm.StartDialogue(afterSolveLookLines);
+            return;
+        }
+
+        TakeClock(dm);
+    }
+
+    private void TakeClock(DialogueManager dm)
+    {
+        if (!GameProgress.TryCollect(StoryItemId.Clock))
+        {
+            Debug.Log("[墙钟] 取钟失败：挂钟已经被拿过了");
+            dm.StartDialogue(afterSolveLookLines);
+            return;
+        }
+
+        Debug.Log($"[墙钟] 已取下 22:47 小挂钟（状态 = {GameProgress.GetState(StoryItemId.Clock)}）");
+
+        takePending = true;                 // 等对话结束再隐藏钟体
+        dm.StartDialogue(takeLines);
     }
 
     // ================= 面板 =================
@@ -140,8 +202,7 @@ public class ClockPuzzle : MonoBehaviour
         }
     }
 
-    // ⚠️ Unity 的 Button.onClick 在 Inspector 里【只能传一个参数】，
-    //    所以做 UI 时三个按钮分别绑下面这三个无参方法（它们不显示在 Inspector 字段里，只作为按钮入口）
+    // ⚠️ Unity 的 Button.onClick 只能传一个参数，所以三个按钮绑下面这三个无参方法
     public void Choose2230() => ChooseTime(22, 30);
     public void Choose2247() => ChooseTime(22, 47);
     public void Choose2300() => ChooseTime(23, 0);
@@ -186,11 +247,34 @@ public class ClockPuzzle : MonoBehaviour
 
     private void OnDialogueFinished()
     {
-        if (!successPending) return;
-        successPending = false;
+        if (successPending)
+        {
+            successPending = false;
+            Debug.Log("[墙钟] 成功反馈结束 —— 现在按 E 可以取下这只小挂钟");
+            return;
+        }
 
-        // 策划案的下一步（【拿走】【暂时不拿】取钟询问）以后接在这里
-        Debug.Log("[墙钟] 成功反馈结束 —— 下一步可以接「是否取下这只小挂钟？」");
+        if (takePending)
+        {
+            takePending = false;
+            HideClockBody();
+        }
+    }
+
+    /// <summary>拿走之后把墙上的钟体藏起来（以后美术给了"空挂点"，就换成隐藏钟体 + 显示空挂点）</summary>
+    private void HideClockBody()
+    {
+        InteractionPromptUI.Hide(this);
+
+        GameObject target = clockBodyToHide;
+
+        if (target == null && transform.parent != null)
+        {
+            target = transform.parent.gameObject;
+        }
+
+        if (target != null) target.SetActive(false);
+        else gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
