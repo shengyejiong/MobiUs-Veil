@@ -453,6 +453,8 @@ MonoBehaviour:
   playerRigidbody: {fileID: 211366848}
   duskSpawnPoint: {fileID: 1246218630}
   gameMenuController: {fileID: 1105415276}
+  screenFader: {fileID: 783722682}
+  playerInput: {fileID: 211366846}
   currentSceneState: 0
 --- !u!4 &234072581
 Transform:
@@ -970,7 +972,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScreenFader
   canvasGroup: {fileID: 783722681}
-  fadeDuration: 1
+  fadeDuration: 4
+  targetAlpha: 0
 --- !u!1 &920248443
 GameObject:
   m_ObjectHideFlags: 0
