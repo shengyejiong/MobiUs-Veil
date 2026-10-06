@@ -5,6 +5,9 @@ public class InteractionTrigger : MonoBehaviour
 {
     [SerializeField] private DialogueLine[] dialogueLines;
 
+    [Tooltip("第二次及以后再调查时显示的文本（留空 = 一直用上面那套）。配了它以后提示会一直显示，可以反复调查")]
+    [SerializeField] private DialogueLine[] secondLines;
+
     [Tooltip("勾上 = 提示一直显示、可以反复交谈（NPC 闲聊这类）；不勾 = 只在第一次交互前提示（调查物品）")]
     [SerializeField] private bool repeatable;
 
@@ -33,10 +36,13 @@ public class InteractionTrigger : MonoBehaviour
             Time.frameCount!= dialogueManager.LastStateChangeFrame &&
             Time.timeScale > 0f;
 
-        // 提示：一次性物体只在第一次交互前显示；勾了 repeatable 的（NPC 闲聊）一直显示
+        // 提示：一次性物体只在第一次交互前显示；
+        // 勾了 repeatable（NPC 闲聊）或配了 secondLines（第二次不一样，比如"合照背面"）时一直显示
+        bool alwaysAvailable = repeatable || (secondLines != null && secondLines.Length > 0);
+
         bool shouldShowPrompt =
             canInteract &&
-            (repeatable || !hasInteracted);
+            (alwaysAvailable || !hasInteracted);
 
         if (shouldShowPrompt)
         {
@@ -61,12 +67,15 @@ public class InteractionTrigger : MonoBehaviour
                 return;
             }
 
-            // 第一次或之后再次按 E，都从第一句开始
+            // 第一次用 dialogueLines；之后再调查，如果配了 secondLines 就换成它
+            bool useSecond = hasInteracted && secondLines != null && secondLines.Length > 0;
+            DialogueLine[] lines = useSecond ? secondLines : dialogueLines;
+
             hasInteracted = true;
 
             InteractionPromptUI.Hide(this);
 
-            dialogueManager.StartDialogue(dialogueLines);
+            dialogueManager.StartDialogue(lines);
         }
     }
 

@@ -5382,6 +5382,9 @@ MonoBehaviour:
   dialogueLines:
   - speaker: "\u5408\u7167"
     content: "\u201C\u6709\u4E9B\u7CCA\u4E86\u3002\u5979\u5374\u4E00\u76F4\u820D\u4E0D\u5F97\u6362\u3002\u201D"
+  secondLines:
+  - speaker: "\u5408\u7167"
+    content: "\u201C\u548C\u6797\u665A\u4E00\u8D77\u62CD\u7684\u7B2C\u4E00\u5F20\u5408\u7167\u3002\u201D"
 --- !u!58 &2057129908
 CircleCollider2D:
   m_ObjectHideFlags: 0
