@@ -130,6 +130,7 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         IsOpen = false;
+        LastStateChangeFrame = Time.frameCount;
         currentLines = null;
         currentIndex = 0;
 

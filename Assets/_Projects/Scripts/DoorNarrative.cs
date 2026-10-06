@@ -10,6 +10,7 @@ public class DoorNarrative : MonoBehaviour
     [SerializeField] private DialogueLine[] alreadyClosedLines;  // 已经扣好时的回应
     [SerializeField] private DialogueLine[] reminderLines;       // 只提醒（1 句）
     [SerializeField] private DialogueLine[] farewellLines;       // 告别 3 句
+    [SerializeField] private DialogueLine[] missingCardLines;//没拿卡片时候的提醒
 
     [Header("第一幕结束")]
     [SerializeField] private SceneTransition sceneTransition;    // 拖 GameFlow 过来
@@ -93,7 +94,12 @@ public class DoorNarrative : MonoBehaviour
 
         if (!Act01Story.FarewellDone)
         {
-             Act01Story.FarewellDone = true;
+            if (GameProgress.GetState(StoryItemId.MessageCard) == StoryItemState.Uncollected)
+            {
+                dm.StartDialogue(missingCardLines);
+                return;
+            }
+            Act01Story.FarewellDone = true;
              farewellPending = true;                   
              dm.StartDialogue(farewellLines);
              return;

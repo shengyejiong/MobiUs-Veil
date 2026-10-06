@@ -51,7 +51,8 @@ public class Act02DoorExit : MonoBehaviour
     private void Interact(DialogueManager dm)
     {
         // 还没拨对钟：门打不开
-        if (!Act02Story.ClockSolved)
+        if (!Act02Story.ClockSolved ||
+            GameProgress.GetState(StoryItemId.Clock) == StoryItemState.Uncollected)
         {
             dm.StartDialogue(lockedLines);
             return;
