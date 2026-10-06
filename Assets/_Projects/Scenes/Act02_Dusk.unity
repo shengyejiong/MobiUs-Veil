@@ -3192,7 +3192,7 @@ MonoBehaviour:
   sceneTransition: {fileID: 234072582}
   lockedLines:
   - speaker: 
-    content: "\u4E00\u80A1\u795E\u79D8\u7684\u529B\u91CF\u5C06\u95E8\u9501\u4F4F\uFF0C\u65E0\u6CD5\u6253\u5F00"
+    content: "\u6211\u521A\u624D\u4E0D\u662F\u5DF2\u7ECF\u51FA\u53BB\u4E86\u5417\uFF1F"
   exitLines:
   - speaker: "\u4E3B\u89D2"
     content: "\u90A3\u4E4B\u540E\u2026\u2026\u6211\u4E0D\u662F\u5DF2\u7ECF\u8D76\u56DE\u6765\u4E86\u5417\uFF1F"
