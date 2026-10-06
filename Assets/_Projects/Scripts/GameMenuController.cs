@@ -58,6 +58,22 @@ public class GameMenuController : MonoBehaviour
         }
     }
 
+    // Items button in the pause menu: open/close the backpack
+    // (same panel as the B key, data comes from GameProgress)
+    public void ToggleBackpack()
+    {
+        if (backpackUI == null) return;
+
+        if (backpackUI.IsOpen)
+        {
+            backpackUI.Close();
+            if (isMenuActive) Time.timeScale = 0f;   // menu still open -> keep paused
+        }
+        else
+        {
+            backpackUI.Open();                        // Refresh + pause inside
+        }
+    }
     public void ResumeGame()
     {
         isMenuActive = false;
