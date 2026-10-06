@@ -1,0 +1,52 @@
+# Unity / Git 协作规范（两台 Windows 开发机通用）
+# 放在第一行的是注释，确保任何编码问题都不会破坏下面的规则。
+
+# ---- 行尾策略 ----
+# 仓库内统一存 LF，Windows 检出为 CRLF（等价于 core.autocrlf=true 的现状，
+# 避免两个人机器配置不同时产生“整文件都是改动”的假 diff）
+* text=auto
+
+# C# 源码
+*.cs text diff=csharp
+
+# ---- Unity YAML 资源：冲突时用 UnityYAMLMerge 智能合并 ----
+# 需要每台机器执行一次配置（见 README「场景冲突怎么办」），未配置时自动退回 Git 默认合并，不会报错
+*.unity              merge=unityyamlmerge
+*.prefab             merge=unityyamlmerge
+*.asset              merge=unityyamlmerge
+*.meta               merge=unityyamlmerge
+*.controller         merge=unityyamlmerge
+*.overrideController merge=unityyamlmerge
+*.anim               merge=unityyamlmerge
+*.mat                merge=unityyamlmerge
+*.physicMaterial     merge=unityyamlmerge
+*.physicsMaterial2D  merge=unityyamlmerge
+
+# ---- 二进制资源：不做行尾转换、不做文本合并 ----
+*.png           binary
+*.jpg           binary
+*.jpeg          binary
+*.gif           binary
+*.psd           binary
+*.tga           binary
+*.tif           binary
+*.exr           binary
+*.hdr           binary
+*.fbx           binary
+*.obj           binary
+*.blend         binary
+*.ogg           binary
+*.mp3           binary
+*.wav           binary
+*.aiff          binary
+*.ttf           binary
+*.otf           binary
+*.dll           binary
+*.so            binary
+*.dylib         binary
+*.a             binary
+*.bundle        binary
+*.unitypackage  binary
+*.cubemap       binary
+*.mp4           binary
+*.webm          binary

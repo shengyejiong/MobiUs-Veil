@@ -112,3 +112,14 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+# ===== 项目自定义（Mobius-Veil）=====
+# 本机编辑器 / AI 工具产生的配置，不入库
+.vscode/
+/ProjectSettings/McpUnitySettings.json
+
+# AI / 编辑器产生的历史备份文件（本次清理时均为 0 字节空文件）
+*.his.cs
+
+# Unity 崩溃恢复场景，只对本机有意义
+/Assets/_Recovery/
+/Assets/_Recovery.meta

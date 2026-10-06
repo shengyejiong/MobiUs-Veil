@@ -1,29 +1,75 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
+    private bool movementLocked;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public bool IsMovementLocked => movementLocked;
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void OnMove(InputAction.CallbackContext context)
+    // PlayerInput 浣跨敤 Send Messages 鏃讹紝鍙傛暟蹇呴』浣跨敤 InputValue
+    public void OnMove(InputValue value)
     {
-        moveInput = context.ReadValue<Vector2>();
+        if (movementLocked)
+        {
+            moveInput = Vector2.zero;
+            return;
+        }
+
+        moveInput = value.Get<Vector2>();
     }
 
-    //物理系统更新时来计算速度，防止帧率不稳定导致的移动速度不稳定
+    public void SetMovementLocked(bool locked)
+    {
+        movementLocked = locked;
+
+        if (locked)
+        {
+            moveInput = Vector2.zero;
+
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+            }
+        }
+    }
+
     private void FixedUpdate()
     {
-        rb.linearVelocity = moveInput * moveSpeed;// 表示每秒移动速度，不需要再乘DeltaTime
+        if (movementLocked)
+        {
+            moveInput = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
+        // 闃叉鍚屾椂鎸変袱涓柟鍚戞椂鏂滃悜閫熷害杩囧揩
+        if (moveInput.sqrMagnitude > 1f)
+        {
+            moveInput.Normalize();
+        }
+
+        rb.linearVelocity = moveInput * moveSpeed;
     }
 
+    private void OnDisable()
+    {
+        moveInput = Vector2.zero;
+        movementLocked = false;
 
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+    }
 }

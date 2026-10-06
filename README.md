@@ -1,0 +1,75 @@
+# Mobius-Veil
+
+Unity 2D 游戏项目，双人协作开发。
+
+- 远端仓库：<https://github.com/shengyejiong/MobiUs-Veil>
+- Unity 版本：**6000.3.25f1**（两人必须用同一版本打开，版本不一致会重写场景/资源文件，产生大量无意义冲突）
+
+---
+
+## 一、第一次拉取之后
+
+1. 用 **Unity Hub → Add → 选择本目录**，用 `6000.3.25f1` 打开，等资源导入跑完（会生成 `Library/`，约 2.5 GB，已被 `.gitignore` 忽略，**永远不要提交**）。
+2. 配置 Unity 场景合并工具（每台机器只做一次，见第四节）。
+3. 确认 `Edit → Project Settings → Editor → Asset Serialization = Force Text`（仓库里已经是这个设置，换机器后确认一下即可）。
+
+## 二、协作铁律
+
+- **开工先 `git pull`，收工就 `git push`。** 不要攒好几天才推一次，拖得越久冲突越多。
+- 一次提交只做一件事，写清楚信息：`feat: 新增暂停菜单` / `fix: 修复对话触发` / `chore: 整理资源目录`。
+- 不要提交 `Library/ Temp/ Logs/ UserSettings/ Build/ .vscode/`（已在 `.gitignore`）。
+- **不要两个人同时改同一个场景或预制体**，改场景前先 pull，改完立刻提交并推送。
+- 单个美术/音频文件超过 ~50 MB 时先说一声，改用 Git LFS。
+
+## 三、日常命令
+
+```bash
+git pull                      # 开工前
+git status                    # 看看自己改了啥
+git add <文件>                # 只加这次要提交的
+git commit -m "feat: xxx"
+git push                      # 收工
+```
+
+## 四、场景冲突怎么办（UnityYAMLMerge）
+
+`.unity` / `.prefab` / `.asset` 是 YAML 文本，默认的 Git 合并会把它们搞坏。仓库里的 `.gitattributes` 已经声明这些文件交给 Unity 自带的 **SmartMerge** 处理，只需每台机器执行一次（路径换成自己的 Unity 安装目录）：
+
+```bash
+git config --global merge.unityyamlmerge.name "Unity SmartMerge"
+git config --global merge.unityyamlmerge.driver '"G:/unityhub/6000.3.25f1/Editor/Data/Tools/UnityYAMLMerge.exe" merge -p %O %B %A %A'
+```
+
+没配置也不会报错，只是退回 Git 默认合并。万一还是冲突：**直接用 Unity 打开场景手动改**，改完 `git add` → `git commit`。
+
+## 五、常见问题
+
+**1. `schannel: failed to receive handshake` / `Failed to connect to github.com port 443 via 127.0.0.1`**
+
+本机网络加速工具打架。记住：**Steam++（Watt Toolkit）的「GitHub 加速」和 Clash 系列只能开一个。**
+
+- Steam++ 会把 `github.com` 写进 hosts 指向 `127.0.0.1`，靠它自己的 `Steam++.Accelerator` 在 443 端口转发；**退出 Steam++ 前要先关掉「GitHub 加速」**，否则 hosts 里的 `127.0.0.1` 不会被清掉，git 会一直连本机 443。
+- Clash 会占用系统代理端口（7xxx）并接管 TUN/DNS，和 Steam++ 抢同一段流量。
+- 自查三条：
+
+```powershell
+Select-String github C:\Windows\System32\drivers\etc\hosts   # 有 127.0.0.1 github.com 就是 Steam++ 在接管
+netstat -ano | findstr ":443 :7897"                          # 加速器 / 代理端口活着没
+git ls-remote origin                                         # 通路到底行不行
+```
+
+**2. `! [rejected] main -> main (non-fast-forward)`**
+
+远端有你没有的提交：`git pull --no-rebase origin main` 然后 `git push origin main`。别用 `-f` 强推，会删掉队友的提交。
+
+**3. 资源丢失引用（粉色 Missing）**
+
+多半是某个资源没入库。在项目根目录执行下面这段，能列出「被引用但没提交」的资源：
+
+```powershell
+$ref = git grep -h -o -E 'guid: [0-9a-f]{32}' -- Assets | ForEach-Object { $_ -replace 'guid: ','' } | Sort-Object -Unique
+git ls-files --others --exclude-standard -- Assets | Where-Object { $_ -like '*.meta' } | ForEach-Object {
+  $g = (Select-String -Path $_ -Pattern '^guid: (\w+)').Matches.Groups[1].Value
+  if ($ref -contains $g) { "未入库但被引用 -> $_" }
+}
+```
