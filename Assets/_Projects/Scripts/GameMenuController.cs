@@ -73,6 +73,15 @@ public class GameMenuController : MonoBehaviour
     // (same panel as the B key, data comes from GameProgress)
     public void ToggleBackpack()
     {
+        if (act04Flow != null &&
+            (act04Flow.IsPlayingSequence || act04Flow.IsGameEnded)) return;
+
+        if (ShadowChase.Instance != null && ShadowChase.Instance.IsChasing)
+        {
+            ShadowChase.Instance.ShowCantUseBackpack();
+            return;
+        }
+
         if (backpackUI == null) return;
 
         if (backpackUI.IsOpen)
