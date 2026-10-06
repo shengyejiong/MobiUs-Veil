@@ -28,6 +28,7 @@ public class GameMenuController : MonoBehaviour
             if(backpackUI != null && backpackUI.IsOpen)
             {
                 backpackUI.Close(); //如果背包已经打开，按下ESC键则关闭背包
+                if (isMenuActive) Time.timeScale = 0f; // menu still open -> keep paused
                 return;//防止多触
             }
             if (PauseMenu.Instance != null && PauseMenu.Instance.OnEscape()) return;
@@ -44,10 +45,18 @@ public class GameMenuController : MonoBehaviour
         if (act04Flow != null && act04Flow.IsPlayingSequence) return;
         if (keyboard.bKey.wasPressedThisFrame)
         {
+            // cannot open the backpack while being chased (design line 325)
+            if (ShadowChase.Instance != null && ShadowChase.Instance.IsChasing)
+            {
+                ShadowChase.Instance.ShowCantUseBackpack();
+                return;
+            }
+
             if (backpackUI == null) return;
             if (backpackUI.IsOpen)
             {
                 backpackUI.Close(); //如果背包已经打开，按下B键则关闭背包
+                if (isMenuActive) Time.timeScale = 0f; // menu still open -> keep paused
             }
             else if(isMenuActive || Time.timeScale == 0f || (sceneTransition != null && sceneTransition.IsTransitioning) || (DialogueManager.Instance != null && DialogueManager.Instance.IsOpen))
             {
@@ -60,8 +69,31 @@ public class GameMenuController : MonoBehaviour
         }
     }
 
+    // Items button in the pause menu: open/close the backpack
+    // (same panel as the B key, data comes from GameProgress)
+    public void ToggleBackpack()
+    {
+        if (backpackUI == null) return;
+
+        if (backpackUI.IsOpen)
+        {
+            backpackUI.Close();
+            if (isMenuActive) Time.timeScale = 0f;   // menu still open -> keep paused
+        }
+        else
+        {
+            // only one panel at a time: must press back first
+            if (PauseMenu.Instance != null && PauseMenu.Instance.IsSettingsOpen) return;
+
+            backpackUI.Open();                        // Refresh + pause inside
+        }
+    }
     public void ResumeGame()
     {
+        // returning to the game must also close any open sub panel (backpack / settings)
+        if (backpackUI != null && backpackUI.IsOpen) backpackUI.Close();
+        if (PauseMenu.Instance != null && PauseMenu.Instance.IsSettingsOpen) PauseMenu.Instance.CloseSubPanels();
+
         isMenuActive = false;
         gameMenu.SetActive(isMenuActive); //关闭菜单
         Time.timeScale = 1;//恢复游戏

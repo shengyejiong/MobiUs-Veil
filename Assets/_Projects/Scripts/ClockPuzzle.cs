@@ -71,6 +71,14 @@ public class ClockPuzzle : MonoBehaviour
         {
             if (Keyboard.current == null) return;
 
+            // ⚠️ 玩家直接走开 → 视为取消，随时可以回来重新调
+            if (!playerInside)
+            {
+                Debug.Log("[墙钟] 你走开了 → 取消调时间（回来还能再拨）");
+                ClosePanel();
+                return;
+            }
+
             if (Keyboard.current.digit1Key.wasPressedThisFrame) ChooseTime(22, 30);
             else if (Keyboard.current.digit2Key.wasPressedThisFrame) ChooseTime(22, 47);
             else if (Keyboard.current.digit3Key.wasPressedThisFrame) ChooseTime(23, 0);

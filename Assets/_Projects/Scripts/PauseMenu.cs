@@ -20,6 +20,10 @@ public class PauseMenu : MonoBehaviour
     [Tooltip("「窗口化」按钮的底图")]
     [SerializeField] private Image windowedButtonImage;
 
+    [Header("互斥面板")]
+    [Tooltip("打开设置面板时会先把背包关掉（两个面板不允许同时开）")]
+    [SerializeField] private BackpackUI backpackUI;
+
     private const string KeyVolume = "opt.volume";
     private const string KeyFullscreen = "opt.fullscreen";
 
@@ -58,6 +62,9 @@ public class PauseMenu : MonoBehaviour
             Transform t = transform.Find("SettingsPanel/WindowedButton");
             if (t != null) windowedButtonImage = t.GetComponent<Image>();
         }
+
+        // 兜底：背包界面（用来做"两个面板互斥"）
+        if (backpackUI == null) backpackUI = FindFirstObjectByType<BackpackUI>();
 
         if (settingsPanel != null) settingsPanel.SetActive(false);
 
@@ -101,10 +108,23 @@ public class PauseMenu : MonoBehaviour
         return false;
     }
 
+    /// <summary>设置面板现在开着吗（给 GameMenuController 判断用）</summary>
+    public bool IsSettingsOpen => settingsPanel != null && settingsPanel.activeSelf;
+
     /// <summary>「设置」按钮</summary>
     public void OpenSettings()
     {
         if (settingsPanel == null) return;
+
+        // 设置已经开着 → 不做任何事
+        if (settingsPanel.activeSelf) return;
+
+        // ★ 同一时间只允许开一个面板：背包还开着就必须先按返回（B / ESC / 道具按钮）关掉它
+        if (backpackUI != null && backpackUI.IsOpen)
+        {
+            Debug.Log("[暂停菜单] 背包还开着 —— 先按 B 或 ESC 返回，才能打开设置");
+            return;
+        }
 
         SyncFromSaved();
         settingsPanel.SetActive(true);
