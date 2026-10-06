@@ -4,37 +4,38 @@ using UnityEngine.InputSystem;
 public class GameMenuController : MonoBehaviour
 {
     public GameObject gameMenu;
-    public bool isMenuActive = false;//³õÊ¼Ê±¹Ø±Õ²Ëµ¥
+    public bool isMenuActive = false;//ï¿½ï¿½Ê¼Ê±ï¿½Ø±Õ²Ëµï¿½
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        gameMenu.SetActive(isMenuActive); //È·±£²Ëµ¥ÔÚ¿ªÊ¼Ê±¹Ø±Õ
+        gameMenu.SetActive(isMenuActive); //È·ï¿½ï¿½ï¿½Ëµï¿½ï¿½Ú¿ï¿½Ê¼Ê±ï¿½Ø±ï¿½
     }
 
     // Update is called once per frame
     void Update()
     {
-        Keyboard keyboard = Keyboard.current;//»ñÈ¡¼üÅÌÊäÈëÒýÓÃ
+        Keyboard keyboard = Keyboard.current;//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if(keyboard == null) return;
 
         if(keyboard.escapeKey.wasPressedThisFrame)
-        {
+        {  
+             if (PauseMenu.Instance != null && PauseMenu.Instance.OnEscape()) return;
             if(isMenuActive)
             {
-                ResumeGame(); //Èç¹û²Ëµ¥ÒÑ¾­¼¤»î£¬°´ÏÂESC¼üÔò¹Ø±Õ²Ëµ¥²¢»Ö¸´ÓÎÏ·
+                ResumeGame(); //ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½î£¬ï¿½ï¿½ï¿½ï¿½ESCï¿½ï¿½ï¿½ï¿½Ø±Õ²Ëµï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ï·
                 return;
             }
-            isMenuActive = !isMenuActive; //ÇÐ»»²Ëµ¥µÄ¼¤»î×´Ì¬
+            isMenuActive = !isMenuActive; //ï¿½Ð»ï¿½ï¿½Ëµï¿½ï¿½Ä¼ï¿½ï¿½ï¿½×´Ì¬
             gameMenu.SetActive(isMenuActive);
-            Time.timeScale = 0;//ÔÝÍ£ÓÎÏ·
+            Time.timeScale = 0;//ï¿½ï¿½Í£ï¿½ï¿½Ï·
         }
     }
 
     public void ResumeGame()
     {
         isMenuActive = false;
-        gameMenu.SetActive(isMenuActive); //¹Ø±Õ²Ëµ¥
-        Time.timeScale = 1;//»Ö¸´ÓÎÏ·
+        gameMenu.SetActive(isMenuActive); //ï¿½Ø±Õ²Ëµï¿½
+        Time.timeScale = 1;//ï¿½Ö¸ï¿½ï¿½ï¿½Ï·
     }
 }
