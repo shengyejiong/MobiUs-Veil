@@ -5,6 +5,9 @@ public class InteractionTrigger : MonoBehaviour
 {
     [SerializeField] private DialogueLine[] dialogueLines;
 
+    [Tooltip("勾上 = 提示一直显示、可以反复交谈（NPC 闲聊这类）；不勾 = 只在第一次交互前提示（调查物品）")]
+    [SerializeField] private bool repeatable;
+
     private bool playerInside;
 
     // 玩家本次运行中是否已经完成过第一次交互
@@ -30,10 +33,10 @@ public class InteractionTrigger : MonoBehaviour
             Time.frameCount!= dialogueManager.LastStateChangeFrame &&
             Time.timeScale > 0f;
 
-        // 只在第一次交互前显示提示
+        // 提示：一次性物体只在第一次交互前显示；勾了 repeatable 的（NPC 闲聊）一直显示
         bool shouldShowPrompt =
             canInteract &&
-            !hasInteracted;
+            (repeatable || !hasInteracted);
 
         if (shouldShowPrompt)
         {
