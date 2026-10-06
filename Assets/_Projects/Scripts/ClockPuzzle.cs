@@ -12,7 +12,7 @@ using UnityEngine.InputSystem;
 ///      拿走 → 隐藏钟体、GameProgress 记录为"在背包"
 ///
 /// 道具状态统一由 GameProgress（数据层）管理，这里只管表现。
-/// 还没做 UI 也能测：Clock Panel 留空时，按 E 后用键盘 1 / 2 / 3 选择（Q 取消）。
+/// 还没做 UI 也能测：Clock Panel 留空时，按 E 后弹出选项面板（鼠标点击 22:30 / 22:47 / 23:00）。
 /// </summary>
 public class ClockPuzzle : MonoBehaviour
 {
@@ -55,7 +55,7 @@ public class ClockPuzzle : MonoBehaviour
     private bool wasDialogueOpen;
     private bool successPending;
     private bool takePending;      // 对话结束后隐藏钟体
-    private bool keyboardChoosing;
+    private bool choosing;              // 选项面板是否开着
     private int hintIndex;
 
     /// <summary>挂钟是否已经不在墙上了（在背包里或已放到底座）。</summary>
@@ -66,11 +66,9 @@ public class ClockPuzzle : MonoBehaviour
     {
         DialogueManager dm = DialogueManager.Instance;
 
-        // ---- 键盘测试模式（没做 UI 时用）----
-        if (keyboardChoosing)
+        // ---- 选项面板开着的时候：只等鼠标点击 ----
+        if (choosing)
         {
-            if (Keyboard.current == null) return;
-
             // ⚠️ 玩家直接走开 → 视为取消，随时可以回来重新调
             if (!playerInside)
             {
@@ -78,11 +76,6 @@ public class ClockPuzzle : MonoBehaviour
                 ClosePanel();
                 return;
             }
-
-            if (Keyboard.current.digit1Key.wasPressedThisFrame) ChooseTime(22, 30);
-            else if (Keyboard.current.digit2Key.wasPressedThisFrame) ChooseTime(22, 47);
-            else if (Keyboard.current.digit3Key.wasPressedThisFrame) ChooseTime(23, 0);
-            else if (Keyboard.current.qKey.wasPressedThisFrame) ClosePanel();
 
             return;
         }
@@ -175,18 +168,39 @@ public class ClockPuzzle : MonoBehaviour
             clockPanel.SetActive(true);
             SetFeedback(promptText);
             Time.timeScale = 0f;                 // 面板打开时暂停（策划案要求）
+            return;
         }
-        else
+
+        // ---- 用画面上的选项面板（鼠标点击）----
+        ChoiceUI ui = ChoiceUI.Get();
+        if (ui == null)
         {
-            keyboardChoosing = true;
-            Debug.Log("[墙钟] 未设置面板 → 键盘测试模式：1 = 22:30，2 = 22:47，3 = 23:00，Q = 取消");
+            Debug.LogWarning("[墙钟] 场景里没有 ChoiceUI 面板 —— 无法弹出选项");
+            return;
         }
+
+        choosing = true;
+        Time.timeScale = 0f;                     // 拨钟时暂停（策划案要求）
+        ui.Show("要把指针拨到几点？",
+                new[] { "22:30", "22:47", "23:00" },
+                idx =>
+                {
+                    choosing = false;
+                    if (Time.timeScale == 0f) Time.timeScale = 1f;
+                    if (idx == 0) ChooseTime(22, 30);
+                    else if (idx == 1) ChooseTime(22, 47);
+                    else ChooseTime(23, 0);
+                });
     }
 
     public void ClosePanel()
     {
         if (clockPanel != null) clockPanel.SetActive(false);
-        keyboardChoosing = false;
+
+        ChoiceUI ui = ChoiceUI.Get();
+        if (ui != null && ui.IsOpen) ui.Hide();
+
+        choosing = false;
 
         if (Time.timeScale == 0f) Time.timeScale = 1f;   // 别把游戏永久暂停了
     }
@@ -204,7 +218,7 @@ public class ClockPuzzle : MonoBehaviour
 
         SetFeedback(wrongText);
 
-        if (keyboardChoosing)
+        if (choosing)
         {
             Debug.Log($"[墙钟] {hour:00}:{minute:00} → {wrongText}");
         }
