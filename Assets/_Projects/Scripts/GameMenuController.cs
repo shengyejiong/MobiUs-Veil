@@ -3,39 +3,65 @@ using UnityEngine.InputSystem;
 
 public class GameMenuController : MonoBehaviour
 {
+    [SerializeField] private BackpackUI backpackUI;
+    [SerializeField] private SceneTransition sceneTransition;
+
     public GameObject gameMenu;
-    public bool isMenuActive = false;//ï¿½ï¿½Ê¼Ê±ï¿½Ø±Õ²Ëµï¿½
+    public bool isMenuActive = false;//³õÊ¼Ê±¹Ø±Õ²Ëµ¥
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        gameMenu.SetActive(isMenuActive); //È·ï¿½ï¿½ï¿½Ëµï¿½ï¿½Ú¿ï¿½Ê¼Ê±ï¿½Ø±ï¿½
+        gameMenu.SetActive(isMenuActive); //È·±£²Ëµ¥ÔÚ¿ªÊ¼Ê±¹Ø±Õ
     }
 
     // Update is called once per frame
     void Update()
     {
-        Keyboard keyboard = Keyboard.current;//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        Keyboard keyboard = Keyboard.current;//»ñÈ¡¼üÅÌÊäÈëÒýÓÃ
         if(keyboard == null) return;
 
         if(keyboard.escapeKey.wasPressedThisFrame)
-        {  
-             if (PauseMenu.Instance != null && PauseMenu.Instance.OnEscape()) return;
+        {
+            if(backpackUI != null && backpackUI.IsOpen)
+            {
+                backpackUI.Close(); //Èç¹û±³°üÒÑ¾­´ò¿ª£¬°´ÏÂESC¼üÔò¹Ø±Õ±³°ü
+                return;//·ÀÖ¹¶à´¥
+            }
+            if (PauseMenu.Instance != null && PauseMenu.Instance.OnEscape()) return;
+
             if(isMenuActive)
             {
-                ResumeGame(); //ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½î£¬ï¿½ï¿½ï¿½ï¿½ESCï¿½ï¿½ï¿½ï¿½Ø±Õ²Ëµï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ï·
+                ResumeGame(); //Èç¹û²Ëµ¥ÒÑ¾­¼¤»î£¬°´ÏÂESC¼üÔò¹Ø±Õ²Ëµ¥²¢»Ö¸´ÓÎÏ·
                 return;
             }
-            isMenuActive = !isMenuActive; //ï¿½Ð»ï¿½ï¿½Ëµï¿½ï¿½Ä¼ï¿½ï¿½ï¿½×´Ì¬
+            isMenuActive = !isMenuActive; //ÇÐ»»²Ëµ¥µÄ¼¤»î×´Ì¬
             gameMenu.SetActive(isMenuActive);
-            Time.timeScale = 0;//ï¿½ï¿½Í£ï¿½ï¿½Ï·
+            Time.timeScale = 0;//ÔÝÍ£ÓÎÏ·
+        }
+
+        if (keyboard.bKey.wasPressedThisFrame)
+        {
+            if (backpackUI == null) return;
+            if (backpackUI.IsOpen)
+            {
+                backpackUI.Close(); //Èç¹û±³°üÒÑ¾­´ò¿ª£¬°´ÏÂB¼üÔò¹Ø±Õ±³°ü
+            }
+            else if(isMenuActive || Time.timeScale == 0f || (sceneTransition != null && sceneTransition.IsTransitioning) || (DialogueManager.Instance != null && DialogueManager.Instance.IsOpen))
+            {
+                return; //Èç¹û²Ëµ¥ÒÑ¾­¼¤»î£¬°´ÏÂB¼üÔò²»×öÈÎºÎ²Ù×÷
+            }
+            else
+            {
+                backpackUI.Open(); //Èç¹û±³°üÎ´´ò¿ª£¬°´ÏÂB¼üÔò´ò¿ª±³°ü
+            }
         }
     }
 
     public void ResumeGame()
     {
         isMenuActive = false;
-        gameMenu.SetActive(isMenuActive); //ï¿½Ø±Õ²Ëµï¿½
-        Time.timeScale = 1;//ï¿½Ö¸ï¿½ï¿½ï¿½Ï·
+        gameMenu.SetActive(isMenuActive); //¹Ø±Õ²Ëµ¥
+        Time.timeScale = 1;//»Ö¸´ÓÎÏ·
     }
 }
