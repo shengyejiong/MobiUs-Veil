@@ -5,8 +5,15 @@ public class MainMenuUI : MonoBehaviour
 {
     public void StartGame()
     {
-        GameProgress.ResetForNewGame();//重置游戏进度
-        SceneManager.LoadScene("Act01_Longing");//加载游戏场景
+        Time.timeScale = 1f;
+
+        GameProgress.ResetForNewGame();
+        Act01Story.ResetStatics();
+        Act02Story.ResetAll();
+        Act03Story.ResetAll();
+        GameState.ResetAll();
+
+        SceneManager.LoadScene("Act01_Longing");
     }
 
     public void QuitGame()

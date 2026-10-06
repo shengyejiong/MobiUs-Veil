@@ -13,7 +13,7 @@ public static class Act02Story
 
     // ⚠️「快速进入 Play 模式」下 static 不会自动清零，这里手动重置
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-    private static void ResetAll()
+    public static void ResetAll()
     {
         PhoneChecked = false;
         ClockSolved = false;
