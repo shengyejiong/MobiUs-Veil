@@ -28,6 +28,8 @@ public class GameMenuController : MonoBehaviour
                 backpackUI.Close(); //如果背包已经打开，按下ESC键则关闭背包
                 return;//防止多触
             }
+            if (PauseMenu.Instance != null && PauseMenu.Instance.OnEscape()) return;
+
             if(isMenuActive)
             {
                 ResumeGame(); //如果菜单已经激活，按下ESC键则关闭菜单并恢复游戏
