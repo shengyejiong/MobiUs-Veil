@@ -6139,6 +6139,9 @@ MonoBehaviour:
     content: "\u201C\u4F1E\u5E26\u4E0A\u3002\u660E\u65E9\u89C1\u3002\u201D"
   - speaker: "\u73A9\u5BB6"
     content: "\u201C\u660E\u65E9\u89C1\u3002\u201D"
+  missingCardLines:
+  - speaker: "\u4E3B\u89D2"
+    content: "\u6211\u662F\u4E0D\u662F\u5FD8\u8BB0\u4E86\u4E9B\u4EC0\u4E48......"
   sceneTransition: {fileID: 234072582}
   autoTransitionAfterFarewell: 1
 --- !u!58 &1489253622

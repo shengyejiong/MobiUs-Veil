@@ -1582,6 +1582,7 @@ MonoBehaviour:
   dialogueLines:
   - speaker: "\u767D\u566A\u97F3\u673A"
     content: "\u6CA1\u6709\u58F0\u97F3\u4E86"
+  secondLines: []
   repeatable: 0
 --- !u!1 &880000009
 GameObject:
@@ -1806,6 +1807,7 @@ MonoBehaviour:
   dialogueLines:
   - speaker: "\u7A97\u5E18"
     content: "\u5929\u8FD8\u6CA1\u6709\u9ED1\u3002\u548C\u79BB\u5F00\u524D\u4E00\u6837\u3002"
+  secondLines: []
   repeatable: 0
 --- !u!1 &880000017
 GameObject:
@@ -2030,6 +2032,7 @@ MonoBehaviour:
   dialogueLines:
   - speaker: "\u5E8A\u5934\u84DD\u676F"
     content: "\u6211\u8BB0\u5F97\u5B83\u5728\u5E8A\u5934\u3002"
+  secondLines: []
   repeatable: 0
 --- !u!1 &880000025
 GameObject:
@@ -2254,6 +2257,7 @@ MonoBehaviour:
   dialogueLines:
   - speaker: "\u5408\u7167"
     content: "\u989C\u8272\u6DE1\u4E86\u3002\u7167\u7247\u91CC\u7684\u4EBA\u8FD8\u5728\u3002"
+  secondLines: []
   repeatable: 0
 --- !u!1 &880000033
 GameObject:
@@ -2480,6 +2484,7 @@ MonoBehaviour:
     content: "\u65F6\u95F4\u8FD8\u770B\u5F97\u89C1\u3002"
   - speaker: "\u6E05\u5355"
     content: "\u6700\u540E\u90A3\u4E00\u683C\uFF0C\u8FD8\u662F\u7A7A\u7740\u3002"
+  secondLines: []
   repeatable: 0
 --- !u!1 &880000041
 GameObject:
@@ -2717,6 +2722,7 @@ MonoBehaviour:
     content: "\u201C\u8FD9\u51E0\u901A\uFF0C\u662F\u6211\u6253\u8FC7\u53BB\u7684\u3002\u201D"
   - speaker: "\u4E3B\u89D2"
     content: "\u201C\u4F46\u5979\u4E00\u76F4\u6CA1\u6709\u63A5\u3002\u201D"
+  secondLines: []
   repeatable: 0
 --- !u!1 &880000110
 GameObject:
@@ -3185,7 +3191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Act02DoorExit
   sceneTransition: {fileID: 234072582}
   lockedLines:
-  - speaker: "\u4E3B\u89D2"
+  - speaker: 
     content: "\u6211\u521A\u624D\u4E0D\u662F\u5DF2\u7ECF\u51FA\u53BB\u4E86\u5417\uFF1F"
   exitLines:
   - speaker: "\u4E3B\u89D2"
@@ -6785,4 +6791,3 @@ SceneRoots:
   - {fileID: 1591232299}
   - {fileID: 229550512}
   - {fileID: 1507093321}
-

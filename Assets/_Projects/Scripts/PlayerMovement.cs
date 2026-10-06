@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private SpriteRenderer visualRenderer;
     bool isWalking = false; // 用于跟踪玩家是否在移动
     bool isSide = false; // 用于跟踪玩家是否在侧面移动
+    bool isBack = false;
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
@@ -44,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
             if (isWalking && Mathf.Abs(moveInput.x) > 0.01f)
             {
                 isSide = true;
+                isBack = false;
                 animator.SetBool("IsSide", isSide);
                 if (moveInput.x > 0f)
                 {
@@ -57,13 +59,15 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 isSide = false;
+                isBack = moveInput.y > 0f; // 向上移动时为背面
                 animator.SetBool("IsSide", isSide);
+                animator.SetBool("IsBack", isBack);
                 visualRenderer.flipX = false; // 停止移动时不翻转
             }
         }
 
         animator.SetBool("IsSide", isSide);
-
+        animator.SetBool("IsBack", isBack);
     }
 
     // PlayerInput 使用 Send Messages 时，参数必须使用 InputValue

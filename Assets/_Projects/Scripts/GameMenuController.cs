@@ -5,6 +5,7 @@ public class GameMenuController : MonoBehaviour
 {
     [SerializeField] private BackpackUI backpackUI;
     [SerializeField] private SceneTransition sceneTransition;
+    [SerializeField] private Act04Flow act04Flow;
 
     public GameObject gameMenu;
     public bool isMenuActive = false;//初始时关闭菜单
@@ -18,6 +19,7 @@ public class GameMenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (act04Flow != null && act04Flow.IsGameEnded) return;//如果游戏已经结束，则不允许打开菜单
         Keyboard keyboard = Keyboard.current;//获取键盘输入引用
         if(keyboard == null) return;
 
@@ -40,7 +42,7 @@ public class GameMenuController : MonoBehaviour
             gameMenu.SetActive(isMenuActive);
             Time.timeScale = 0;//暂停游戏
         }
-
+        if (act04Flow != null && act04Flow.IsPlayingSequence) return;
         if (keyboard.bKey.wasPressedThisFrame)
         {
             // cannot open the backpack while being chased (design line 325)
@@ -71,6 +73,15 @@ public class GameMenuController : MonoBehaviour
     // (same panel as the B key, data comes from GameProgress)
     public void ToggleBackpack()
     {
+        if (act04Flow != null &&
+            (act04Flow.IsPlayingSequence || act04Flow.IsGameEnded)) return;
+
+        if (ShadowChase.Instance != null && ShadowChase.Instance.IsChasing)
+        {
+            ShadowChase.Instance.ShowCantUseBackpack();
+            return;
+        }
+
         if (backpackUI == null) return;
 
         if (backpackUI.IsOpen)
