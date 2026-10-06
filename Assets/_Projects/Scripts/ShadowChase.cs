@@ -110,7 +110,11 @@ public class ShadowChase : MonoBehaviour
         // ---- 什么时候出现：名字写完 + 「是否拿走」询问答完 ----
         if (!IsChasing)
         {
-            if (Act03Story.NameWritten && Act03Story.PlaqueAsked) StartChase();
+            if (Act03Story.NameWritten && Act03Story.PlaqueAsked &&
+    GameProgress.GetState(StoryItemId.MemorialPlaque) != StoryItemState.Uncollected)
+            {
+                StartChase();
+            }
             return;
         }
 

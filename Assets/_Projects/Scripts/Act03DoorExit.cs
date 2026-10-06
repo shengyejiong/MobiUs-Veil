@@ -30,7 +30,10 @@ public class Act03DoorExit : MonoBehaviour
     private bool wasDialogueOpen;
 
     /// <summary>可以开门了吗：资料已读 + 名字已写</summary>
-    private static bool Ready => Act03Story.FactsRead && Act03Story.NameWritten;
+    private static bool Ready =>
+    Act03Story.FactsRead &&
+    Act03Story.NameWritten &&
+    GameProgress.GetState(StoryItemId.MemorialPlaque) != StoryItemState.Uncollected;
 
     private void Awake()
     {

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Act04Flow : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class Act04Flow : MonoBehaviour
     public bool IsPlayingSequence { get; private set; }
 
     private bool openingStarted;//¿ªÄ»
+    private bool endInputReady;
 
     private bool AllItemsPlaced()
     {
@@ -38,6 +40,26 @@ public class Act04Flow : MonoBehaviour
 
     private void Update()
     {
+        if (IsGameEnded)
+        {
+            if (!endInputReady) return;
+
+            bool returnRequested =
+                (Mouse.current != null &&
+                 Mouse.current.leftButton.wasReleasedThisFrame) ||
+                (Keyboard.current != null &&
+                 Keyboard.current.anyKey.wasReleasedThisFrame);
+
+            if (returnRequested)
+            {
+                endInputReady = false;
+                Time.timeScale = 1f;
+                SceneManager.LoadScene("MainMenu");
+            }
+
+            return;
+        }
+
         if (openingStarted) return;//·ÀÖØ¸´²¥·Å
 
         DialogueManager dm = DialogueManager.Instance;
@@ -145,6 +167,13 @@ public class Act04Flow : MonoBehaviour
         IsGameEnded = true;
         IsPlayingSequence = false;
         Time.timeScale = 0f;
+
+        yield return new WaitUntil(() =>
+    (Keyboard.current == null || !Keyboard.current.anyKey.isPressed) &&
+    (Mouse.current == null || !Mouse.current.leftButton.isPressed));
+
+        yield return null;
+        endInputReady = true;
     }
 
 }
