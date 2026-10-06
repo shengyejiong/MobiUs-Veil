@@ -183,6 +183,7 @@ public class PlaqueNameWrite : MonoBehaviour
         if (choiceMode == 2)
         {
             choiceMode = 0;
+            Act03Story.PlaqueAsked = true;     // ★ 询问答完了 → 追逐检查点建立、黑影可以出现
 
             if (GameProgress.TryCollect(itemId))
             {
@@ -199,8 +200,16 @@ public class PlaqueNameWrite : MonoBehaviour
 
     private void CancelChoice()
     {
-        if (choiceMode == 1) Debug.Log("[纪念牌] 暂时不写 —— 之后回来还能写");
-        else Debug.Log("[纪念牌] 暂时不拿 —— 牌子留在床边");
+        if (choiceMode == 1)
+        {
+            Debug.Log("[纪念牌] 暂时不写 —— 之后回来还能写");
+        }
+        else
+        {
+            // 选「暂时不拿」也算询问结束 → 同样建立追逐检查点（策划案 322 行：两种选择都继续）
+            Debug.Log("[纪念牌] 暂时不拿 —— 牌子留在床边");
+            Act03Story.PlaqueAsked = true;
+        }
 
         choiceMode = 0;
         pendingWrite = false;

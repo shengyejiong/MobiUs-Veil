@@ -8,6 +8,7 @@ public static class Act03Story
 {
     public static bool FactsRead;      // 死亡资料已读（医院通知 + 事后记录）
     public static bool NameWritten;    // 纪念牌已写下"林晚"
+    public static bool PlaqueAsked;    // 纪念牌的"是否拿走"询问已经答完（→ 建立追逐检查点、黑影可以出现了）
     public static bool PlaqueTaken;    // 纪念牌已拿走（GameProgress 也记，这里方便判断）
     public static bool DoorLooped;     // 第一次开门（空间循环）已经发生
 
@@ -17,6 +18,7 @@ public static class Act03Story
     {
         FactsRead = false;
         NameWritten = false;
+        PlaqueAsked = false;
         PlaqueTaken = false;
         DoorLooped = false;
     }
