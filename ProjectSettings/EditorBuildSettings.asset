@@ -9,8 +9,17 @@ EditorBuildSettings:
     path: Assets/_Projects/Scenes/MainMenu.unity
     guid: 73b0a00b3d355d74eb2add9bd184261a
   - enabled: 1
-    path: Assets/_Projects/Scenes/RoomPrototype.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/_Projects/Scenes/Act01_Longing.unity
+    guid: 35f1e1fa4e9cc0e4e8b5badbfbcb18e7
+  - enabled: 1
+    path: Assets/_Projects/Scenes/Act02_Dusk.unity
+    guid: 021df878761db9c4e8994c4e592fe114
+  - enabled: 1
+    path: Assets/_Projects/Scenes/Act03_Grave.unity
+    guid: a2dddd965cd3d76439520a830106dfab
+  - enabled: 1
+    path: Assets/_Projects/Scenes/Act04_Stage.unity
+    guid: 9c2951336f4ac4c46bd91e34ba9d291a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

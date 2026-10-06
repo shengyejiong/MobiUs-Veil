@@ -699,7 +699,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 234072579}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0b4d7a8925e2f04cb9fbcc2ae6528f7, type: 3}
   m_Name: 
@@ -3451,6 +3451,14 @@ PrefabInstance:
     - target: {fileID: 5674768406695156107, guid: ed0bc333b914ca3488b0c7308d8cbfda, type: 3}
       propertyPath: m_Name
       value: World
+      objectReference: {fileID: 0}
+    - target: {fileID: 5945795751134706301, guid: ed0bc333b914ca3488b0c7308d8cbfda, type: 3}
+      propertyPath: m_Color.b
+      value: 0.69803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 5945795751134706301, guid: ed0bc333b914ca3488b0c7308d8cbfda, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8784314
       objectReference: {fileID: 0}
     - target: {fileID: 7499834429290569033, guid: ed0bc333b914ca3488b0c7308d8cbfda, type: 3}
       propertyPath: m_LocalPosition.x

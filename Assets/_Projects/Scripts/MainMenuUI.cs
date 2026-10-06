@@ -5,7 +5,7 @@ public class MainMenuUI : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("RoomPrototype");//加载游戏场景
+        SceneManager.LoadScene("Act01_Longing");//加载游戏场景
     }
 
     public void QuitGame()
