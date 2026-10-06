@@ -882,11 +882,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionTrigger
   dialogueLines:
-  - speaker: "\u73A9\u5BB6"
+  - speaker: "\u6797\u83AB"
     content: "\u4F60\u597D"
   - speaker: "\u7269\u54C1B"
     content: "\u54E6\uFF0C\u65E9\u4E0A\u597D"
-  - speaker: "\u73A9\u5BB6"
+  - speaker: "\u6797\u83AB"
     content: "\u55EF\u55EF"
   secondLines: []
   repeatable: 0
@@ -925,7 +925,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.75
+  m_Radius: 0.8
 --- !u!1 &244160439
 GameObject:
   m_ObjectHideFlags: 0
@@ -1065,7 +1065,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -3370,7 +3370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ActOpeningLine
   openingLines:
-  - speaker: "\u4E3B\u89D2"
+  - speaker: "\u6797\u83AB"
     content: "\u2026\u2026\u600E\u4E48\u4F1A\u53D8\u6210\u8FD9\u6837\uFF1F"
   delay: 1.2
 --- !u!1 &892000010
@@ -3403,7 +3403,8 @@ Transform:
   m_LocalPosition: {x: -4.5, y: -2.44, z: 0}
   m_LocalScale: {x: 1.1839, y: 1.0919, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 892000015}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &892000012
@@ -3495,7 +3496,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -3538,11 +3539,11 @@ Transform:
   m_GameObject: {fileID: 892000014}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.09, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.8447, y: 0.9158, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 893000061}
+  m_Father: {fileID: 892000011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &892000016
 CircleCollider2D:
@@ -3579,7 +3580,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.75
+  m_Radius: 0.8
 --- !u!114 &892000017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3720,7 +3721,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -3763,8 +3764,8 @@ Transform:
   m_GameObject: {fileID: 892000024}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 5.1, y: -24.5, z: 0}
+  m_LocalScale: {x: 41.2873, y: 36.0466, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 892000021}
@@ -3804,7 +3805,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 30
+  m_Radius: 1.6
 --- !u!114 &892000027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3947,7 +3948,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -3991,7 +3992,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7122, y: 0.819, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 892000031}
@@ -4031,7 +4032,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.55
+  m_Radius: 0.8
 --- !u!114 &892000037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4052,7 +4053,7 @@ MonoBehaviour:
       22:47"
   - speaker: "\u624B\u673A"
     content: "\u672A\u63A5\u6765\u7535\uFF1A22:48 / 22:49 / 22:51"
-  - speaker: "\u4E3B\u89D2"
+  - speaker: "\u6797\u83AB"
     content: "\u201C\u2026\u2026\u8FD8\u662F\u8FD9\u4E09\u901A\u3002\u201D"
   secondLines: []
   repeatable: 0
@@ -4179,7 +4180,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -4223,7 +4224,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8052, y: 0.8742, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 892000041}
@@ -4263,7 +4264,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.75
+  m_Radius: 0.8
 --- !u!114 &892000047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4404,7 +4405,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -4448,7 +4449,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.31, y: 0.07, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3786, y: 1.4599, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 892000051}
@@ -4629,7 +4630,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -4854,7 +4855,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -4898,7 +4899,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.21, y: -0.4, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1691, y: 1.0693, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 892000071}
@@ -4938,7 +4939,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.75
+  m_Radius: 0.8
 --- !u!114 &892000077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4952,7 +4953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionTrigger
   dialogueLines:
-  - speaker: "\u5B58\u6863\u7B14\u8BB0\u672C"
+  - speaker: "\u7B14\u8BB0\u672C"
     content: "\u201C\u91CC\u9762\u7684\u5B57\u8FD8\u770B\u5F97\u6E05\u3002\u201D"
   secondLines: []
   repeatable: 0
@@ -4984,7 +4985,7 @@ Transform:
   m_GameObject: {fileID: 892000080}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000037151898, y: -0.0073643387, z: 0.005044636, w: 0.9999602}
-  m_LocalPosition: {x: 3.32, y: 4.68, z: -0}
+  m_LocalPosition: {x: 3.32, y: 4.35, z: -0}
   m_LocalScale: {x: 0.46732914, y: 0.45351496, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5080,7 +5081,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -5124,7 +5125,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.53, y: -0.34, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.1398, y: 2.205, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 892000081}
@@ -5164,7 +5165,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 2
+  m_Radius: 1.6
 --- !u!114 &892000087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5323,7 +5324,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -5407,7 +5408,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.8
 --- !u!114 &892000097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5564,7 +5565,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -5607,8 +5608,8 @@ Transform:
   m_GameObject: {fileID: 893000004}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.07, y: -2.3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 17.5785, y: 18.8834, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 893000001}
@@ -5648,7 +5649,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 25
+  m_Radius: 1.5
 --- !u!114 &893000007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5674,9 +5675,9 @@ MonoBehaviour:
     content: "23:06\uFF0C\u6211\u8D76\u56DE\u4E86\u5979\u7684\u95E8\u524D\u3002"
   - speaker: "\u8BB0\u5F55"
     content: "\u4E4B\u540E\uFF0C\u533B\u9662\u544A\u8BC9\u6211\uFF0C\u6CA1\u80FD\u6551\u56DE\u6765\u3002"
-  - speaker: "\u4E3B\u89D2"
+  - speaker: "\u6797\u83AB"
     content: "\u6211\u8D76\u56DE\u6765\u8FC7\u3002"
-  - speaker: "\u4E3B\u89D2"
+  - speaker: "\u6797\u83AB"
     content: "\u53EF\u6211\u5DF2\u7ECF\u6765\u665A\u4E86\u3002"
   againLines: []
 --- !u!1 &893000010
@@ -5802,7 +5803,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -5900,15 +5901,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlaqueNameWrite
   needFactsLines:
-  - speaker: "\u4E3B\u89D2"
+  - speaker: "\u6797\u83AB"
     content: "\uFF08\u5E8A\u8FB9\u538B\u7740\u4E24\u4EFD\u4E1C\u897F\u2026\u2026\uFF09"
   askNameLines:
-  - speaker: "\u4E3B\u89D2"
+  - speaker: "\u6797\u83AB"
     content: "\u540D\u5B57\uFF0C\u6211\u4E00\u76F4\u90FD\u8BB0\u5F97\u3002"
   afterWriteLines:
-  - speaker: "\u4E3B\u89D2"
+  - speaker: "\u6797\u83AB"
     content: "\u53EF\u6211\u4E00\u76F4\u6CA1\u80AF\u628A\u5B83\u5199\u5728\u8FD9\u91CC\u3002"
-  - speaker: "\u4E3B\u89D2"
+  - speaker: "\u6797\u83AB"
     content: "\u4E00\u5757\u5C0F\u6728\u724C\u3002\u540D\u5B57\u7EC8\u4E8E\u5199\u4E0A\u53BB\u4E86\u3002"
   askTakeLines: []
   plaqueRenderer: {fileID: 893000012}
@@ -6039,7 +6040,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -6138,10 +6139,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Act03DoorExit
   sceneTransition: {fileID: 234072582}
   lockedLines:
-  - speaker: "\u4E3B\u89D2"
+  - speaker: "\u6797\u83AB"
     content: "\u95E8\u7F1D\u540E\u8FD8\u662F\u9ED1\u7684\u3002\u5E8A\u8FB9\u6709\u4E1C\u897F\u3002"
   loopLines:
-  - speaker: "\u4E3B\u89D2"
+  - speaker: "\u6797\u83AB"
     content: "\u600E\u4E48\u53C8\u56DE\u6765\u4E86\uFF1F"
   stageTraces:
   - {fileID: 893000030}
@@ -6361,8 +6362,7 @@ Transform:
   m_LocalPosition: {x: 5.5, y: 3.4, z: 0}
   m_LocalScale: {x: 0.25, y: 1.6, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 892000015}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &893000062
@@ -8425,7 +8425,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -9855,7 +9855,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.75
+  m_Radius: 0.8
 --- !u!114 &1543223511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9869,11 +9869,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionTrigger
   dialogueLines:
-  - speaker: "\u73A9\u5BB6"
+  - speaker: "\u6797\u83AB"
     content: "\u6211\u5728\u54EA\u91CC"
   - speaker: "\u7269\u54C1A"
     content: "\u6211\u600E\u4E48\u77E5\u9053\uFF0C\u6211\u662F\u4E2A\u7269\u54C1"
-  - speaker: "\u73A9\u5BB6"
+  - speaker: "\u6797\u83AB"
     content: "\u597D\u5427"
   secondLines: []
   repeatable: 0
@@ -10383,7 +10383,7 @@ MonoBehaviour:
   respawnPosition: {x: -4.6, y: 0}
   screenFader: {fileID: 0}
   caughtLines:
-  - speaker: "\u4E3B\u89D2"
+  - speaker: "\u6797\u83AB"
     content: "\u4F60\u5DF2\u7ECF\u77E5\u9053\u4E86"
   blackFadeSeconds: 0.35
   blackHoldSeconds: 0.4

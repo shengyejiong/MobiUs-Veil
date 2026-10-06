@@ -1051,6 +1051,12 @@ MonoBehaviour:
   afterMemoryLines:
   - speaker: 
     content: "\u6211\u53C8\u628A\u90A3\u4E00\u665A\uFF0C\u91CD\u65B0\u6F14\u4E86\u4E00\u904D\u3002"
+  - speaker: 
+    content: "\u83AB\u665A\u3002"
+  - speaker: 
+    content: "\u83AB\u665A\u3002"
+  - speaker: 
+    content: "\u8BB0\u4F4F\u76F8\u7231\u7684\u4EBA\uFF0C\u522B\u8BA9\u201C\u7231\u201D\uFF0C\u8BF4\u592A\u665A\u3002"
   stagePedestals: {fileID: 245174997}
   screenFader: {fileID: 783722682}
   endPanel: {fileID: 1021856485}
@@ -1100,11 +1106,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionTrigger
   dialogueLines:
-  - speaker: "\u73A9\u5BB6"
+  - speaker: "\u6797\u83AB"
     content: "\u4F60\u597D"
   - speaker: "\u7269\u54C1B"
     content: "\u54E6\uFF0C\u65E9\u4E0A\u597D"
-  - speaker: "\u73A9\u5BB6"
+  - speaker: "\u6797\u83AB"
     content: "\u55EF\u55EF"
   secondLines: []
   repeatable: 0
@@ -1143,7 +1149,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.75
+  m_Radius: 0.8
 --- !u!1 &245174997
 GameObject:
   m_ObjectHideFlags: 0
@@ -1226,7 +1232,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -2690,7 +2696,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.017685652}
-  m_Radius: 0.7829701
+  m_Radius: 0.8
 --- !u!114 &860907306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4477,7 +4483,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -6880,7 +6886,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.75
+  m_Radius: 0.8
 --- !u!114 &1543223511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6894,11 +6900,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionTrigger
   dialogueLines:
-  - speaker: "\u73A9\u5BB6"
+  - speaker: "\u6797\u83AB"
     content: "\u6211\u5728\u54EA\u91CC"
   - speaker: "\u7269\u54C1A"
     content: "\u6211\u600E\u4E48\u77E5\u9053\uFF0C\u6211\u662F\u4E2A\u7269\u54C1"
-  - speaker: "\u73A9\u5BB6"
+  - speaker: "\u6797\u83AB"
     content: "\u597D\u5427"
   secondLines: []
   repeatable: 0
@@ -6993,7 +6999,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.017685652}
-  m_Radius: 0.7829701
+  m_Radius: 0.8
 --- !u!1 &1582236360
 GameObject:
   m_ObjectHideFlags: 0
@@ -7384,7 +7390,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.017685652}
-  m_Radius: 0.7829701
+  m_Radius: 0.8
 --- !u!1 &1654491528
 GameObject:
   m_ObjectHideFlags: 0
@@ -7735,7 +7741,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: -0.32939517, y: 0.042964578}
-  m_Radius: 0.67185843
+  m_Radius: 0.8
 --- !u!4 &1919233219
 Transform:
   m_ObjectHideFlags: 0
