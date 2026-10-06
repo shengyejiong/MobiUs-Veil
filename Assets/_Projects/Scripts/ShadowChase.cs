@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -130,6 +130,10 @@ public class ShadowChase : MonoBehaviour
         // ---- 对话期间不追（策划案 345 行）----
         DialogueManager dm = DialogueManager.Instance;
         if (dm != null && dm.IsOpen) return;
+
+        // ---- 选项面板开着时也不追（对话 / 选择期间暂停追逐）----
+        ChoiceUI cui = ChoiceUI.Get();
+        if (cui != null && cui.IsOpen) return;
 
         // ---- 反应时间 ----
         if (reactTimer > 0f)

@@ -773,11 +773,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionTrigger
   dialogueLines:
-  - speaker: "\u73A9\u5BB6"
+  - speaker: "\u6797\u83AB"
     content: "\u4F60\u597D"
   - speaker: "\u7269\u54C1B"
     content: "\u54E6\uFF0C\u65E9\u4E0A\u597D"
-  - speaker: "\u73A9\u5BB6"
+  - speaker: "\u6797\u83AB"
     content: "\u55EF\u55EF"
 --- !u!58 &234348108
 CircleCollider2D:
@@ -2836,11 +2836,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionTrigger
   dialogueLines:
-  - speaker: "\u73A9\u5BB6"
+  - speaker: "\u6797\u83AB"
     content: "\u6211\u5728\u54EA\u91CC"
   - speaker: "\u7269\u54C1A"
     content: "\u6211\u600E\u4E48\u77E5\u9053\uFF0C\u6211\u662F\u4E2A\u7269\u54C1"
-  - speaker: "\u73A9\u5BB6"
+  - speaker: "\u6797\u83AB"
     content: "\u597D\u5427"
 --- !u!1 &1582236360
 GameObject:

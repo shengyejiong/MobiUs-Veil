@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
@@ -15,6 +15,23 @@ public class Act03Evidence : MonoBehaviour
     private bool playerInside;
     private bool wasDialogueOpen;
     private bool readOnce;
+
+    /// <summary>
+    /// ★ 自动补偿父物体的缩放（和 InteractionTrigger 一样）：
+    ///   资料这类被缩得很小的物体，交互圈不会被一起缩小，
+    ///   保证 CircleCollider2D 的 radius 是"世界坐标里的真实半径"。
+    /// </summary>
+    private void Awake()
+    {
+        Transform parent = transform.parent;
+        if (parent == null) return;
+
+        Vector3 s = parent.lossyScale;
+        if (Mathf.Abs(s.x) > 0.0001f && Mathf.Abs(s.y) > 0.0001f)
+        {
+            transform.localScale = new Vector3(1f / s.x, 1f / s.y, 1f);
+        }
+    }
 
     private void Update()
     {

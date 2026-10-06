@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
@@ -7,8 +7,8 @@ using UnityEngine.InputSystem;
 /// 固定顺序（策划案 323 行）：
 ///   读资料 → 写名 → 基础信息 → 是否拿走 → 关闭界面 →（建立追逐检查点）
 ///
-/// 白盒说明：写名/拿取的"界面"暂时用键盘 1 / 2 代替（和墙钟一样的做法），
-///           以后做了真正的按钮面板，把 autoKeyboardChoice 关掉改成面板即可。
+/// 白盒说明：写名/拿取用画面上的选项面板（ChoiceUI，鼠标点击），
+///           玩家走开则视为"暂时不写 / 暂时不拿"，随时可以回来重新调查。
 /// </summary>
 public class PlaqueNameWrite : MonoBehaviour
 {
@@ -47,24 +47,20 @@ public class PlaqueNameWrite : MonoBehaviour
 
     private void Update()
     {
-        // ---- 选择模式（写名 / 拿取）----
+        // ---- 选择中：只等面板回调 ----
         // ⚠️ 玩家如果直接走开，就当作"暂时不写 / 暂时不拿"，随时可以回来重新调查
         if (choiceMode != 0)
         {
-            if (Keyboard.current == null) return;
-
             if (!playerInside)
             {
                 Debug.Log(choiceMode == 1
                     ? "[纪念牌] 你走开了 → 视为暂时不写（回来还能写）"
                     : "[纪念牌] 你走开了 → 视为暂时不拿（回来还能拿）");
+                ChoiceUI ui = ChoiceUI.Get();
+                if (ui != null && ui.IsOpen) ui.Hide();
                 choiceMode = 0;
                 return;
             }
-
-            if (Keyboard.current.digit1Key.wasPressedThisFrame) ConfirmChoice();
-            else if (Keyboard.current.digit2Key.wasPressedThisFrame) CancelChoice();
-            else if (Keyboard.current.qKey.wasPressedThisFrame) CancelChoice();
 
             return;
         }
@@ -122,8 +118,7 @@ public class PlaqueNameWrite : MonoBehaviour
         // ③ 写过名、还没拿走 → 基础信息 + 询问是否拿走
         if (askTakeLines == null || askTakeLines.Length == 0)
         {
-            choiceMode = 2;
-            Debug.Log("[纪念牌] 1 = 拿走这块纪念牌 ， 2 = 暂时不拿");
+            ShowTakeChoice();
             return;
         }
 
@@ -147,17 +142,47 @@ public class PlaqueNameWrite : MonoBehaviour
         if (pendingWrite)
         {
             pendingWrite = false;
-            choiceMode = 1;
-            Debug.Log("[纪念牌] 1 = 写下林晚的名字 ， 2 = 暂时不写");
+            ShowWriteChoice();
             return;
         }
 
         if (pendingTakeAsk)
         {
             pendingTakeAsk = false;
-            choiceMode = 2;
-            Debug.Log("[纪念牌] 1 = 拿走这块纪念牌 ， 2 = 暂时不拿");
+            ShowTakeChoice();
         }
+    }
+
+    /// <summary>弹出"写名"选项（鼠标点击）</summary>
+    private void ShowWriteChoice()
+    {
+        choiceMode = 1;
+        ChoiceUI ui = ChoiceUI.Get();
+        if (ui == null)
+        {
+            Debug.LogWarning("[纪念牌] 场景里没有 ChoiceUI 面板 —— 无法弹出选项");
+            choiceMode = 0;
+            return;
+        }
+        ui.Show("要在这里写下她的名字吗？",
+                new[] { "写下「林晚」", "暂时不写" },
+                idx => { if (idx == 0) ConfirmChoice(); else CancelChoice(); });
+    }
+
+    /// <summary>弹出"是否拿走"选项（鼠标点击）</summary>
+    private void ShowTakeChoice()
+    {
+        choiceMode = 2;
+        ChoiceUI ui = ChoiceUI.Get();
+        if (ui == null)
+        {
+            Debug.LogWarning("[纪念牌] 场景里没有 ChoiceUI 面板 —— 无法弹出选项");
+            choiceMode = 0;
+            return;
+        }
+        ui.Show("要把这块纪念牌带走吗？",
+                new[] { "拿走", "暂时不拿" },
+                idx => { if (idx == 0) ConfirmChoice(); else CancelChoice(); });
     }
 
     private void ConfirmChoice()

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InteractionTrigger : MonoBehaviour
@@ -15,6 +15,25 @@ public class InteractionTrigger : MonoBehaviour
 
     // 玩家本次运行中是否已经完成过第一次交互
     private bool hasInteracted;
+
+    /// <summary>
+    /// ★ 自动补偿父物体的缩放：
+    ///   交互圈（InteractionRange）会跟着父物体一起被缩放，
+    ///   照片这种被拖进来时特别大、后来缩到 0.02 倍的物体，
+    ///   交互圈就会小到点不到。这里把它反向放大，保证
+    ///   CircleCollider2D 的 radius 永远是"世界坐标里的真实半径"。
+    /// </summary>
+    private void Awake()
+    {
+        Transform parent = transform.parent;
+        if (parent == null) return;
+
+        Vector3 s = parent.lossyScale;
+        if (Mathf.Abs(s.x) > 0.0001f && Mathf.Abs(s.y) > 0.0001f)
+        {
+            transform.localScale = new Vector3(1f / s.x, 1f / s.y, 1f);
+        }
+    }
 
     // 提示（Press E to react）由场景里唯一的 InteractionPromptUI 统一管理：
     // 这里只需要"申请显示"或"归还"，不用再手动拖 prompt 引用。
