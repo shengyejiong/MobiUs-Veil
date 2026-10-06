@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private Animator animator; 
+    bool isWalking = false; // 用于跟踪玩家是否在移动
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
@@ -15,6 +17,20 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        if(!movementLocked && moveInput.sqrMagnitude > 0f)
+        {
+            isWalking = true;
+            animator.SetBool("IsWalking", isWalking);
+        }
+        else
+        {
+            isWalking = false;
+            animator.SetBool("IsWalking", isWalking);
+        }
     }
 
     // PlayerInput 使用 Send Messages 时，参数必须使用 InputValue

@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance { get; private set; }
+    public int LastStateChangeFrame { get; private set; } = -1;
 
     [Header("对话 UI")]
     [SerializeField] private GameObject dialoguePanel;
@@ -44,7 +45,8 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (!IsOpen)
+        //打开对话框后，防止在同一帧中立即后推对话
+        if (!IsOpen || Time.frameCount == LastStateChangeFrame || Time.timeScale == 0f)
         {
             return;
         }
@@ -53,7 +55,9 @@ public class DialogueManager : MonoBehaviour
             (Mouse.current != null &&
              Mouse.current.leftButton.wasPressedThisFrame) ||
             (Keyboard.current != null &&
-             Keyboard.current.spaceKey.wasPressedThisFrame);
+             (Keyboard.current.spaceKey.wasPressedThisFrame ||
+                Keyboard.current.eKey.wasPressedThisFrame
+             ));
 
         if (nextPressed)
         {
@@ -72,7 +76,7 @@ public class DialogueManager : MonoBehaviour
         currentLines = lines;
         currentIndex = 0;
         IsOpen = true;
-
+        LastStateChangeFrame = Time.frameCount;
         SetPlayerMovementLocked(true);
 
         if (dialoguePanel != null)
@@ -106,7 +110,7 @@ public class DialogueManager : MonoBehaviour
 
         if (clickHint != null)
         {
-            clickHint.text = "点击继续";
+            clickHint.text = "按E/空格或点击继续";
         }
     }
 

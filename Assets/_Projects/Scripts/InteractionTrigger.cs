@@ -26,7 +26,9 @@ public class InteractionTrigger : MonoBehaviour
 
         bool canInteract =
             playerInside &&
-            !dialogueManager.IsOpen;
+            !dialogueManager.IsOpen &&
+            Time.frameCount!= dialogueManager.LastStateChangeFrame &&
+            Time.timeScale > 0f;
 
         // 只在第一次交互前显示提示
         bool shouldShowPrompt =
