@@ -20,6 +20,9 @@ public class SceneTransition : MonoBehaviour
         playerMovement.SetMovementLocked(false);//Ω‚À¯ÕÊº““∆∂Ø
         playerInput.ActivateInput();
         IsTransitioning = false;
+        Debug.Log(GameProgress.GetState(StoryItemId.MessageCard));
+        Debug.Log(GameProgress.GetState(StoryItemId.MemorialPlaque));
+        Debug.Log(GameProgress.GetState(StoryItemId.Clock));
     }
 
     private void Awake()
@@ -54,6 +57,18 @@ public class SceneTransition : MonoBehaviour
             if(Keyboard.current.nKey.wasPressedThisFrame)
             {
                 GoToNextScene();
+            }
+            if(Keyboard.current.f1Key.wasPressedThisFrame)
+            {
+                Debug.Log(GameProgress.TryCollect(StoryItemId.MessageCard));
+            }
+            if(Keyboard.current.f2Key.wasPressedThisFrame)
+            {
+                Debug.Log(GameProgress.TryPlace(StoryItemId.MessageCard, StoryItemId.Clock));
+            }
+            if (Keyboard.current.f3Key.wasPressedThisFrame)
+            {
+                Debug.Log(GameProgress.TryPlace(StoryItemId.MessageCard, StoryItemId.MessageCard));
             }
         }
     }
