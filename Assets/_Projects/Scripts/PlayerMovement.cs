@@ -5,8 +5,10 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private Animator animator; 
+    [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer visualRenderer;
     bool isWalking = false; // 用于跟踪玩家是否在移动
+    bool isSide = false; // 用于跟踪玩家是否在侧面移动
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
@@ -21,7 +23,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if(!movementLocked && moveInput.sqrMagnitude > 0f)
+        if(Time.timeScale == 0f)
+        {
+            return; // 暂停时不更新动画状态
+        }
+
+        if (!movementLocked && moveInput.sqrMagnitude > 0f)
         {
             isWalking = true;
             animator.SetBool("IsWalking", isWalking);
@@ -31,6 +38,32 @@ public class PlayerMovement : MonoBehaviour
             isWalking = false;
             animator.SetBool("IsWalking", isWalking);
         }
+        if (isWalking)
+        {
+            
+            if (isWalking && Mathf.Abs(moveInput.x) > 0.01f)
+            {
+                isSide = true;
+                animator.SetBool("IsSide", isSide);
+                if (moveInput.x > 0f)
+                {
+                    visualRenderer.flipX = true; // 向右移动时翻转
+                }
+                else
+                {
+                    visualRenderer.flipX = false; // 向左移动时不翻转
+                }
+            }
+            else
+            {
+                isSide = false;
+                animator.SetBool("IsSide", isSide);
+                visualRenderer.flipX = false; // 停止移动时不翻转
+            }
+        }
+
+        animator.SetBool("IsSide", isSide);
+
     }
 
     // PlayerInput 使用 Send Messages 时，参数必须使用 InputValue

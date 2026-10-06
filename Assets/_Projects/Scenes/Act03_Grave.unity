@@ -642,6 +642,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeed: 3
   animator: {fileID: 1456111475}
+  visualRenderer: {fileID: 1456111474}
 --- !u!1 &229550511
 GameObject:
   m_ObjectHideFlags: 0

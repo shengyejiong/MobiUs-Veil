@@ -225,7 +225,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281677134
+    rgba: 4287418879
   m_fontColor: {r: 1, g: 0.82, b: 0.55, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -362,7 +362,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4293980400
   m_fontColor: {r: 0.94, g: 0.94, b: 0.94, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -642,6 +642,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeed: 3
   animator: {fileID: 1456111475}
+  visualRenderer: {fileID: 1456111474}
 --- !u!1 &229550511
 GameObject:
   m_ObjectHideFlags: 0
@@ -2765,7 +2766,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 2365587455
   m_fontColor: {r: 1, g: 1, b: 1, a: 0.55}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -3082,7 +3083,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4293326847
   m_fontColor: {r: 1, g: 0.97, b: 0.9, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
