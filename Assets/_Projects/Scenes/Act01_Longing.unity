@@ -2311,7 +2311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScreenFader
   canvasGroup: {fileID: 783722681}
-  fadeDuration: 0.8
+  fadeDuration: 1.6
   targetAlpha: 0
 --- !u!1 &832674768
 GameObject:
