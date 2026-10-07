@@ -1,4 +1,4 @@
-using System.Collections;
+﻿﻿﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -11,12 +11,12 @@ public class Act04Flow : MonoBehaviour
     [SerializeField] private float openDistance = 16.5f;
     [SerializeField] private float openDuration = 2f;
 
-    [Header("Ļ������ǽ��")]
+    [Header("Ļ������ǽ��")]
     [SerializeField] private Transform coveringCurtain;
     [SerializeField, Min(0.1f)] private float coverDuration = 0.8f;
     [SerializeField] private GameObject stageStep;
 
-    [Header("��̨��ͷ")]
+    [Header("��̨��ͷ")]
     [SerializeField] private CinemachineCamera stageCamera;
     [SerializeField] private CinemachineBrain cameraBrain;
     [SerializeField, Min(0.1f)] private float cameraBlendDuration = 2f;
@@ -24,7 +24,7 @@ public class Act04Flow : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private SpriteRenderer memoryDisplay;
 
-    [Header("���仭�浭�뵭��")]
+    [Header("���仭�浭�뵭��")]
     [SerializeField] private Sprite memoryOneSprite;
     [SerializeField] private Sprite memoryTwoSprite;
     [SerializeField] private Sprite memoryThreeSprite;
@@ -40,14 +40,24 @@ public class Act04Flow : MonoBehaviour
     [SerializeField] private ScreenFader screenFader;
     [SerializeField] private GameObject endPanel;
 
+    [Header("结局自动切换")]
+    [Tooltip("床边结局演完后，自动切换到哪个场景")]
+    [SerializeField] private string nextSceneName = "Ending_Reality";
+
+    [Tooltip("结局面板停留多少秒后自动切换（按任意键可提前跳过）")]
+    [SerializeField, Min(0.5f)] private float autoEndSeconds = 2.5f;
+
+    [Tooltip("舞台撤具后，玩家 N 秒内没去调查床就自动进结局（0 = 不自动，慢慢逛）")]
+    [SerializeField, Min(0f)] private float autoAdvanceSeconds = 5f;
+
     public bool IsGameEnded { get; private set; }
     private Vector3 closedCurtainPosition;
 
-    public bool CanUseBed { get; private set; }//��������Ļ�Ƿ��Ѿ�����
+    public bool CanUseBed { get; private set; }//��������Ļ�Ƿ��Ѿ�����
 
     public bool IsPlayingSequence { get; private set; }
 
-    private bool openingStarted;//��Ļ
+    private bool openingStarted;//��Ļ
     private bool endInputReady;
     private bool stageCameraActive;
     private CinemachineBlendDefinition savedCameraBlend;
@@ -84,13 +94,13 @@ public class Act04Flow : MonoBehaviour
             {
                 endInputReady = false;
                 Time.timeScale = 1f;
-                SceneManager.LoadScene("MainMenu");
+                SceneManager.LoadScene(nextSceneName);
             }
 
             return;
         }
 
-        if (openingStarted) return;//���ظ�����
+        if (openingStarted) return;//���ظ�����
 
         DialogueManager dm = DialogueManager.Instance;
         if (dm == null || dm.IsOpen || Time.timeScale == 0f) return;
@@ -138,6 +148,10 @@ public class Act04Flow : MonoBehaviour
         playerMovement.SetMovementLocked(false);
         playerInput.ActivateInput();
         IsPlayingSequence = false;
+
+        // ★ 自动推进：撤具后给玩家 autoAdvanceSeconds 秒自由活动时间，
+        //   如果一直没去调查床，就自动进入结局（按 E 上床仍然立即生效）
+        if (autoAdvanceSeconds > 0f) StartCoroutine(AutoAdvanceToEnding());
     }
 
     private IEnumerator SetStageCamera(bool active)
@@ -283,6 +297,31 @@ public class Act04Flow : MonoBehaviour
         }
     }
 
+    /// <summary>撤具后的自动推进：等一会儿如果玩家没去床边，就自动进结局</summary>
+    private IEnumerator AutoAdvanceToEnding()
+    {
+        float waited = 0f;
+        while (waited < autoAdvanceSeconds)
+        {
+            // 玩家已经上床了 / 正在放演出 / 已经结束 -> 直接退出
+            if (!CanUseBed || IsPlayingSequence || IsGameEnded) yield break;
+
+            // 玩家正在看对话就先不计时（别打断阅读）
+            DialogueManager dm = DialogueManager.Instance;
+            bool talking = dm != null && dm.IsOpen;
+
+            if (!talking && Time.timeScale > 0f) waited += Time.deltaTime;
+            yield return null;
+        }
+
+        if (CanUseBed && !IsPlayingSequence && !IsGameEnded)
+        {
+            Debug.Log("[第四幕] 玩家一直没去床边，自动进入结局");
+            EndGame();
+        }
+    }
+
+
     public void EndGame()
     {
         if (!CanUseBed || IsPlayingSequence || IsGameEnded) return;
@@ -306,12 +345,37 @@ public class Act04Flow : MonoBehaviour
         IsPlayingSequence = false;
         Time.timeScale = 0f;
 
-        yield return new WaitUntil(() =>
-    (Keyboard.current == null || !Keyboard.current.anyKey.isPressed) &&
-    (Mouse.current == null || !Mouse.current.leftButton.isPressed));
+        // ★ 自动切换：结局面板停留 autoEndSeconds 秒后自动进下一幕，
+        //   期间按任意键可以提前跳过（不用再傻等按键）
+        //   注意 timeScale = 0，所以计时要用 unscaledDeltaTime
+        float elapsed = 0f;
+        bool skip = false;
+        while (elapsed < autoEndSeconds && !skip)
+        {
+            elapsed += Time.unscaledDeltaTime;
 
-        yield return null;
-        endInputReady = true;
+            if (!endInputReady)
+            {
+                // 先等玩家把刚才那一下松开，避免"上床那次按键"直接跳过
+                if ((Keyboard.current == null || !Keyboard.current.anyKey.isPressed) &&
+                    (Mouse.current == null || !Mouse.current.leftButton.isPressed))
+                {
+                    endInputReady = true;
+                }
+            }
+            else if ((Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame) ||
+                     (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame))
+            {
+                skip = true;
+            }
+
+            yield return null;
+        }
+
+        // 时间要恢复，否则新场景是冻结的
+        Time.timeScale = 1f;
+        Debug.Log("[第四幕] 结局结束，进入：" + nextSceneName);
+        SceneManager.LoadScene(nextSceneName);
     }
 
 }
