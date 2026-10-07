@@ -1404,7 +1404,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
---- !u!114 &619394801 stripped
+--- !u!114 &619394801
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5945795751134706301, guid: ed0bc333b914ca3488b0c7308d8cbfda, type: 3}
   m_PrefabInstance: {fileID: 4376491102966664314}
@@ -3579,8 +3579,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.8
+  m_Offset: {x: 0.03, y: 0.01}
+  m_Radius: 0.4759
 --- !u!114 &892000017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3804,8 +3804,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.024540896, y: -0.036811166}
-  m_Radius: 0.7042647
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.6976
 --- !u!114 &892000027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4031,8 +4031,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.8
+  m_Offset: {x: -0.02, y: 0}
+  m_Radius: 0.45
 --- !u!114 &892000037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4263,8 +4263,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.13709572, y: 0.041047417}
-  m_Radius: 0.59140295
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.45
 --- !u!114 &892000047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4488,8 +4488,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 1
+  m_Offset: {x: 0.035, y: -0.415}
+  m_Radius: 0.6398
 --- !u!114 &892000057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4938,8 +4938,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.061349828, y: 0}
-  m_Radius: 0.7386502
+  m_Offset: {x: 0.04, y: -0.05}
+  m_Radius: 0.5836
 --- !u!114 &892000077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5164,8 +5164,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.073007815, y: -0.062091433}
-  m_Radius: 0.80242723
+  m_Offset: {x: 0.005, y: -0.005}
+  m_Radius: 0.6926
 --- !u!114 &892000087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5407,8 +5407,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.8
+  m_Offset: {x: 0.03, y: 0.01}
+  m_Radius: 0.45
 --- !u!114 &892000097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6125,7 +6125,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.35
+  m_Radius: 0.6
 --- !u!114 &893000027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6438,7 +6438,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!212 &893000083 stripped
+--- !u!212 &893000083
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 8963076135806147664, guid: ed0bc333b914ca3488b0c7308d8cbfda, type: 3}
   m_PrefabInstance: {fileID: 4376491102966664314}
@@ -9563,7 +9563,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1172270713}
   m_CullTransparentMesh: 1
---- !u!4 &1246218630 stripped
+--- !u!4 &1246218630
 Transform:
   m_CorrespondingSourceObject: {fileID: 4233135610147603385, guid: ed0bc333b914ca3488b0c7308d8cbfda, type: 3}
   m_PrefabInstance: {fileID: 4376491102966664314}
@@ -10105,7 +10105,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7f615c59cfb2a84b84744edd75f36c7, type: 3}
---- !u!114 &1513551251 stripped
+--- !u!114 &1513551251
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7849622548227615343, guid: f7f615c59cfb2a84b84744edd75f36c7, type: 3}
   m_PrefabInstance: {fileID: 1513551250}
@@ -10116,12 +10116,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!1 &1513551252 stripped
+--- !u!1 &1513551252
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8467296321002759982, guid: f7f615c59cfb2a84b84744edd75f36c7, type: 3}
   m_PrefabInstance: {fileID: 1513551250}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &1513551253 stripped
+--- !u!224 &1513551253
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6094944119803564639, guid: f7f615c59cfb2a84b84744edd75f36c7, type: 3}
   m_PrefabInstance: {fileID: 1513551250}

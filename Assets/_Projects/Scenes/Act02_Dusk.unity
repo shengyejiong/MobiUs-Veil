@@ -842,7 +842,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7f615c59cfb2a84b84744edd75f36c7, type: 3}
---- !u!114 &459219086 stripped
+--- !u!114 &459219086
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7849622548227615343, guid: f7f615c59cfb2a84b84744edd75f36c7, type: 3}
   m_PrefabInstance: {fileID: 459219085}
@@ -853,12 +853,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!1 &459219087 stripped
+--- !u!1 &459219087
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8467296321002759982, guid: f7f615c59cfb2a84b84744edd75f36c7, type: 3}
   m_PrefabInstance: {fileID: 459219085}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &459219088 stripped
+--- !u!224 &459219088
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6094944119803564639, guid: f7f615c59cfb2a84b84744edd75f36c7, type: 3}
   m_PrefabInstance: {fileID: 459219085}
@@ -1111,7 +1111,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
---- !u!114 &619394801 stripped
+--- !u!114 &619394801
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5945795751134706301, guid: ed0bc333b914ca3488b0c7308d8cbfda, type: 3}
   m_PrefabInstance: {fileID: 4376491102966664314}
@@ -1794,8 +1794,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.085890874, y: 0.19632123}
-  m_Radius: 0.71778834
+  m_Offset: {x: 0.035, y: -0.415}
+  m_Radius: 0.6823
 --- !u!114 &880000008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2244,8 +2244,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.8
+  m_Offset: {x: 0.055, y: -0.03}
+  m_Radius: 0.45
 --- !u!114 &880000024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2430,7 +2430,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.7, y: -14.8, z: 0}
-  m_LocalScale: {x: 30.6394, y: 34.9756, z: 1}
+  m_LocalScale: {x: 35.524, y: 34.9756, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 880000026}
@@ -2469,8 +2469,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.27030343, y: -0.08589255}
-  m_Radius: 0.83923733
+  m_Offset: {x: -0.8, y: -0.3}
+  m_Radius: 0.8377
 --- !u!114 &880000032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2695,7 +2695,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.8
+  m_Radius: 0.45
 --- !u!114 &880000040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2921,8 +2921,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.484936, y: 0.08486366}
-  m_Radius: 0.59992766
+  m_Offset: {x: -0.02, y: 0}
+  m_Radius: 0.45
 --- !u!114 &880000048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8211,7 +8211,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1246218630 stripped
+--- !u!4 &1246218630
 Transform:
   m_CorrespondingSourceObject: {fileID: 4233135610147603385, guid: ed0bc333b914ca3488b0c7308d8cbfda, type: 3}
   m_PrefabInstance: {fileID: 4376491102966664314}
