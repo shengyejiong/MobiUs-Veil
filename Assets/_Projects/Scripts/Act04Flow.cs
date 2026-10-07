@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Unity.Cinemachine;
 
 public class Act04Flow : MonoBehaviour
 {
@@ -10,8 +11,26 @@ public class Act04Flow : MonoBehaviour
     [SerializeField] private float openDistance = 16.5f;
     [SerializeField] private float openDuration = 2f;
 
+    [Header("幕布覆盖墙面")]
+    [SerializeField] private Transform coveringCurtain;
+    [SerializeField, Min(0.1f)] private float coverDuration = 0.8f;
+    [SerializeField] private GameObject stageStep;
+
+    [Header("舞台镜头")]
+    [SerializeField] private CinemachineCamera stageCamera;
+    [SerializeField] private CinemachineBrain cameraBrain;
+    [SerializeField, Min(0.1f)] private float cameraBlendDuration = 2f;
+
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private SpriteRenderer memoryDisplay;
+
+    [Header("回忆画面淡入淡出")]
+    [SerializeField] private Sprite memoryOneSprite;
+    [SerializeField] private Sprite memoryTwoSprite;
+    [SerializeField] private Sprite memoryThreeSprite;
+    [SerializeField, Range(0f, 0.99f)] private float memoryMaxAlpha = 0.85f;
+    [SerializeField, Min(0.01f)] private float memoryFadeDuration = 0.7f;
+    [SerializeField, Min(0f)] private float memoryMinHold = 1.5f;
 
     [SerializeField] private DialogueLine[] memoryOneLines;
     [SerializeField] private DialogueLine[] memoryTwoLines;
@@ -30,12 +49,23 @@ public class Act04Flow : MonoBehaviour
 
     private bool openingStarted;//开幕
     private bool endInputReady;
+    private bool stageCameraActive;
+    private CinemachineBlendDefinition savedCameraBlend;
 
     private bool AllItemsPlaced()
     {
         return GameProgress.GetState(StoryItemId.MessageCard) == StoryItemState.Placed
             && GameProgress.GetState(StoryItemId.Clock) == StoryItemState.Placed
             && GameProgress.GetState(StoryItemId.MemorialPlaque) == StoryItemState.Placed;
+    }
+
+    private void Start()
+    {
+        if (memoryDisplay != null)
+        {
+            SetMemoryAlpha(0f);
+            memoryDisplay.enabled = false;
+        }
     }
 
     private void Update()
@@ -77,8 +107,10 @@ public class Act04Flow : MonoBehaviour
     {
         playerInput.DeactivateInput();
         playerMovement.SetMovementLocked(true);
+        yield return SetStageCamera(true);
         Vector3 startPos = curtainRoot.position;
         closedCurtainPosition = startPos;
+        yield return CoverWall();
         Vector3 endPos = startPos + Vector3.left * openDistance;
         float elapsed = 0f;
         while (elapsed < openDuration)
@@ -89,12 +121,18 @@ public class Act04Flow : MonoBehaviour
             yield return null;
         }
         curtainRoot.position = endPos;
+
+        // Leave the fabric at the left edge; only the wall group returns later.
+        if (coveringCurtain != null)
+            coveringCurtain.SetParent(curtainRoot.parent, true);
+        if (stageStep != null) stageStep.SetActive(true);
         yield return PlayMemories();
 
         playerMovement.SetMovementLocked(true);
-        yield return CloseCurtain();
+        yield return RestoreWall();
 
         stagePedestals.SetActive(false);
+        yield return SetStageCamera(false);
         CanUseBed = true;
 
         playerMovement.SetMovementLocked(false);
@@ -102,7 +140,66 @@ public class Act04Flow : MonoBehaviour
         IsPlayingSequence = false;
     }
 
-    private IEnumerator CloseCurtain()
+    private IEnumerator SetStageCamera(bool active)
+    {
+        if (stageCamera == null) yield break;
+        if (cameraBrain == null) cameraBrain = FindFirstObjectByType<CinemachineBrain>();
+        if (active)
+        {
+            if (cameraBrain != null)
+            {
+                savedCameraBlend = cameraBrain.DefaultBlend;
+                cameraBrain.DefaultBlend = new CinemachineBlendDefinition(
+                    CinemachineBlendDefinition.Styles.EaseInOut, Mathf.Max(0.1f, cameraBlendDuration));
+            }
+            stageCameraActive = true;
+        }
+        stageCamera.enabled = active;
+        yield return null;
+        if (cameraBrain != null)
+        {
+            while (cameraBrain.IsBlending) yield return null;
+        }
+        else yield return new WaitForSeconds(Mathf.Max(0.1f, cameraBlendDuration));
+
+        if (!active)
+        {
+            if (cameraBrain != null) cameraBrain.DefaultBlend = savedCameraBlend;
+            stageCameraActive = false;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (!stageCameraActive) return;
+        if (stageCamera != null) stageCamera.enabled = false;
+        if (cameraBrain != null) cameraBrain.DefaultBlend = savedCameraBlend;
+        stageCameraActive = false;
+    }
+
+    private IEnumerator CoverWall()
+    {
+        if (coveringCurtain == null) yield break;
+        SpriteRenderer fabricRenderer = coveringCurtain.GetComponent<SpriteRenderer>();
+        Color color = fabricRenderer != null ? fabricRenderer.color : Color.white;
+        color.a = 0f;
+        if (fabricRenderer != null) fabricRenderer.color = color;
+        coveringCurtain.gameObject.SetActive(true);
+
+        float elapsed = 0f;
+        float duration = Mathf.Max(0.1f, coverDuration);
+        while (elapsed < duration)
+        {
+            color.a = Mathf.SmoothStep(0f, 1f, elapsed / duration);
+            if (fabricRenderer != null) fabricRenderer.color = color;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        color.a = 1f;
+        if (fabricRenderer != null) fabricRenderer.color = color;
+    }
+
+    private IEnumerator RestoreWall()
     {
         playerInput.DeactivateInput();
         playerMovement.SetMovementLocked(true);
@@ -117,32 +214,73 @@ public class Act04Flow : MonoBehaviour
             yield return null;
         }
         curtainRoot.position = endPos;
-        playerMovement.SetMovementLocked(false);
-        playerInput.ActivateInput();
     }
 
-    private IEnumerator ShowMemory(Color tint, DialogueLine[] lines)
+    private void SetMemoryAlpha(float alpha)
+    {
+        if (memoryDisplay != null)
+            memoryDisplay.color = new Color(1f, 1f, 1f, Mathf.Clamp01(alpha));
+    }
+
+    private IEnumerator FadeMemory(float targetAlpha)
+    {
+        if (memoryDisplay == null) yield break;
+        float startAlpha = memoryDisplay.color.a;
+        float elapsed = 0f;
+        float duration = Mathf.Max(0.01f, memoryFadeDuration);
+        while (elapsed < duration)
+        {
+            float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
+            SetMemoryAlpha(Mathf.Lerp(startAlpha, targetAlpha, t));
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        SetMemoryAlpha(targetAlpha);
+    }
+
+    private IEnumerator ShowMemory(Sprite image, DialogueLine[] lines)
     {
         yield return new WaitUntil(() =>
             Time.timeScale > 0f &&
             (Keyboard.current == null || !Keyboard.current.eKey.isPressed));
 
-        memoryDisplay.color = tint;
+        if (memoryDisplay != null)
+        {
+            memoryDisplay.sprite = image;
+            SetMemoryAlpha(0f);
+            memoryDisplay.enabled = image != null;
+        }
+        yield return FadeMemory(Mathf.Clamp(memoryMaxAlpha, 0f, 0.99f));
 
         DialogueManager dm = DialogueManager.Instance;
-        dm.StartDialogue(lines);
-
-        yield return new WaitUntil(() => !dm.IsOpen);
+        if (dm != null && lines != null && lines.Length > 0) dm.StartDialogue(lines);
+        float held = 0f;
+        while ((dm != null && dm.IsOpen) || held < memoryMinHold)
+        {
+            if (playerMovement != null) playerMovement.SetMovementLocked(true);
+            held += Time.deltaTime;
+            yield return null;
+        }
+        if (playerMovement != null) playerMovement.SetMovementLocked(true);
+        yield return FadeMemory(0f);
+        if (memoryDisplay != null) memoryDisplay.enabled = false;
     }
 
     private IEnumerator PlayMemories()
     {
-        Color stageColor = memoryDisplay.color;
+        yield return ShowMemory(memoryOneSprite, memoryOneLines);
+        yield return ShowMemory(memoryTwoSprite, memoryTwoLines);
+        yield return ShowMemory(memoryThreeSprite, memoryThreeLines);
 
-        yield return ShowMemory(new Color(1f, 0.8f, 0.55f), memoryOneLines);
-        yield return ShowMemory(new Color(0.65f, 0.7f, 0.9f), memoryTwoLines);
-        yield return ShowMemory(new Color(0.55f, 0.6f, 0.65f), memoryThreeLines);
-        yield return ShowMemory(stageColor, afterMemoryLines);
+        yield return new WaitUntil(() =>
+            Time.timeScale > 0f &&
+            (Keyboard.current == null || !Keyboard.current.eKey.isPressed));
+        DialogueManager dm = DialogueManager.Instance;
+        if (dm != null && afterMemoryLines != null && afterMemoryLines.Length > 0)
+        {
+            dm.StartDialogue(afterMemoryLines);
+            while (dm != null && dm.IsOpen) yield return null;
+        }
     }
 
     public void EndGame()

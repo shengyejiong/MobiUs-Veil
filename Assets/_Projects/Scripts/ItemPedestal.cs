@@ -10,6 +10,20 @@ public class ItemPedestal : MonoBehaviour
     [SerializeField] private DialogueLine[] alreadyPlacedLines;
     [SerializeField] private Act04Flow act04Flow;
 
+    [Header("已放置物品的显示")]
+    [SerializeField] private SpriteRenderer placedItemRenderer;
+
+    private void Start()
+    {
+        RefreshPlacedItem();
+    }
+
+    private void RefreshPlacedItem()
+    {
+        if (placedItemRenderer != null)
+            placedItemRenderer.enabled = GameProgress.GetState(requiredItemId) == StoryItemState.Placed;
+    }
+
     private bool playerInside;
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -61,6 +75,7 @@ public class ItemPedestal : MonoBehaviour
         }
         if(GameProgress.TryPlace(requiredItemId, requiredItemId))
         {
+            RefreshPlacedItem();
             dm.StartDialogue(placedLines);
         }
 
