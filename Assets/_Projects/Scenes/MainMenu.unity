@@ -1477,9 +1477,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StaffUI
   font: {fileID: 11400000, guid: 00caefb7ba439db43ab19c4895a6bbd4, type: 2}
   title: STAFF
-  planning: "\u5C0Fa\uFF0C\u5C0Fb"
-  programming: "\u5C0Fc\uFF0C\u5C0Fd"
-  art: "\u5C0Fe\uFF0C\u5C0Ff"
+  planning: "\u5317\u9ED1\uFF0C...(\u53E6\u4E00\u4F4D\u7B56\u5212\u771F\u7684\u53EB\u4E09\u4E2A\u70B9\uFF09"
+  programming: "jacques\u84DD\uFF0C\u591C\u8FE5"
+  art: "\u6E21\u8D4A\uFF0C\u6728\u6625"
   panelColor: {r: 0.05, g: 0.06, b: 0.09, a: 1}
   titleColor: {r: 0.96, g: 0.94, b: 0.89, a: 1}
   textColor: {r: 0.88, g: 0.88, b: 0.9, a: 1}
