@@ -20,6 +20,10 @@ public class DialogueManager : MonoBehaviour
     private int currentIndex;
 
     public bool IsOpen { get; private set; }
+    public string CurrentSpeaker => IsOpen && currentLines != null
+        && currentIndex >= 0 && currentIndex < currentLines.Length
+        && currentLines[currentIndex] != null
+        ? currentLines[currentIndex].speaker : string.Empty;
 
     private void Awake()
     {

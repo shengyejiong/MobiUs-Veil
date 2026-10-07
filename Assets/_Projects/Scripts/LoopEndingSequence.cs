@@ -11,6 +11,10 @@ public sealed class LoopEndingSequence : MonoBehaviour
     [SerializeField] private CanvasGroup screenFade;
     [SerializeField] private CanvasGroup titleGroup;
     [SerializeField] private TMP_Text caption;
+    [Header("静态演员（仅用于播片）")]
+    [SerializeField] private SpriteRenderer femaleVisual;
+    [SerializeField] private Sprite femaleSideSprite;
+    [SerializeField] private Transform playerVisual;
     [SerializeField, Min(0.1f)] private float fadeSeconds = 0.8f;
     [SerializeField, Min(0.1f)] private float welcomeSeconds = 2f;
     [SerializeField, Min(0.1f)] private float answerSeconds = 1.8f;
@@ -19,6 +23,15 @@ public sealed class LoopEndingSequence : MonoBehaviour
 
     public bool HasFinished { get; private set; }
     private bool endInputReady;
+    private Sprite originalFemaleSprite;
+    private bool originalFemaleFlipX;
+
+    private void Awake()
+    {
+        if (femaleVisual == null) return;
+        originalFemaleSprite = femaleVisual.sprite;
+        originalFemaleFlipX = femaleVisual.flipX;
+    }
 
     private void Update()
     {
@@ -45,8 +58,14 @@ public sealed class LoopEndingSequence : MonoBehaviour
         titleGroup.alpha = 0f;
         caption.text = string.Empty;
         screenFade.alpha = 1f;
+        RestoreFemalePose();
         yield return Fade(screenFade, 0f);
 
+        if (femaleVisual != null && femaleSideSprite != null && playerVisual != null)
+        {
+            femaleVisual.sprite = femaleSideSprite;
+            femaleVisual.flipX = playerVisual.position.x > femaleVisual.transform.position.x;
+        }
         caption.text = "林晚：醒啦？";
         yield return new WaitForSeconds(welcomeSeconds);
         caption.text = string.Empty;
@@ -57,6 +76,7 @@ public sealed class LoopEndingSequence : MonoBehaviour
         yield return new WaitForSeconds(finalHoldSeconds);
 
         yield return Fade(screenFade, 1f);
+        RestoreFemalePose();
         yield return Fade(titleGroup, 1f);
         HasFinished = true;
         onSequenceFinished.Invoke();
@@ -65,6 +85,13 @@ public sealed class LoopEndingSequence : MonoBehaviour
             && (Mouse.current == null || !Mouse.current.leftButton.isPressed));
         yield return null;
         endInputReady = true;
+    }
+
+    private void RestoreFemalePose()
+    {
+        if (femaleVisual == null) return;
+        femaleVisual.sprite = originalFemaleSprite;
+        femaleVisual.flipX = originalFemaleFlipX;
     }
 
     private IEnumerator Fade(CanvasGroup group, float target)

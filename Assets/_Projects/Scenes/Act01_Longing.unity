@@ -562,6 +562,24 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2017319530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017319523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc737b105c0451895c8ad8f63aaec47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NpcDialogueFacing
+  characterRenderer: {fileID: 2017319525}
+  player: {fileID: 211366844}
+  sideSprite: {fileID: -1157796646752149525, guid: ada91cc6a69a38a40a65c36819268851, type: 3}
+  speakerName: 林晚
+  sideSpriteFacesLeft: 1
+  restoreAfterDialogue: 1
 --- !u!1 &211366842
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,6 +795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9803ce4f6362a1d40bd9c72d9f460d93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  initialFacing: 3
   moveSpeed: 3
   animator: {fileID: 1456111475}
   visualRenderer: {fileID: 1456111474}
@@ -6263,9 +6282,9 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 15
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 2d2ffd08fcc80d2488e67c8f5453506f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fd1ee019f2a2e024ba4fc69ad54053a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 2, y: 2}
@@ -8313,6 +8332,7 @@ GameObject:
   - component: {fileID: 2017319526}
   - component: {fileID: 2017319525}
   - component: {fileID: 2017319524}
+  - component: {fileID: 2017319530}
   m_Layer: 0
   m_Name: GirlFriend
   m_TagString: Untagged

@@ -4,6 +4,10 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    private enum FacingDirection { Down, Up, Left, Right }
+
+    [Header("开局朝向")]
+    [SerializeField] private FacingDirection initialFacing = FacingDirection.Down;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer visualRenderer;
@@ -20,6 +24,22 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        isSide = initialFacing == FacingDirection.Left || initialFacing == FacingDirection.Right;
+        isBack = initialFacing == FacingDirection.Up;
+        if (visualRenderer != null) visualRenderer.flipX = initialFacing == FacingDirection.Right;
+        if (animator == null || !animator.isActiveAndEnabled) return;
+
+        animator.SetBool("IsWalking", false);
+        animator.SetBool("IsSide", isSide);
+        animator.SetBool("IsBack", isBack);
+        string idleState = isSide ? "Base Layer.IdleSide"
+            : isBack ? "Base Layer.IdleBack" : "Base Layer.IdleFront";
+        animator.Play(idleState, 0, 0f);
+        animator.Update(0f);
     }
 
     private void Update()
