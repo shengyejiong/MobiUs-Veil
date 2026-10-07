@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public static class Act02Story
 {
+    public static bool ClockIntroPlayed; // 首次调钟前的对白是否已经显示
     public static bool PhoneChecked;   // 是否调查过手机
     public static bool ClockSolved;    // 是否把墙钟拨到 22:47（门解锁）
 
@@ -16,6 +17,7 @@ public static class Act02Story
     public static void ResetAll()
     {
         PhoneChecked = false;
+        ClockIntroPlayed = false;
         ClockSolved = false;
     }
 }

@@ -10,25 +10,37 @@ public class ActOpeningLine : MonoBehaviour
 {
     [SerializeField] private DialogueLine[] openingLines;
 
-    [Tooltip("等淡入结束再说话（秒）")]
+    [Tooltip("进场到开场对白的最短等待时间；对白一定在淡入完成后开始")]
     [SerializeField] private float delay = 1.2f;
+
+    private bool hasPlayed;
 
     private IEnumerator Start()
     {
-        if (openingLines == null || openingLines.Length == 0)
-        {
-            yield break;
-        }
+        // 有转场控制器时，由它统一负责淡入、开场对白和移动解锁。
+        SceneTransition transition = FindFirstObjectByType<SceneTransition>();
+        if (transition != null && transition.isActiveAndEnabled) yield break;
 
-        yield return new WaitForSeconds(delay);
+        yield return PlayOpening();
+    }
+
+    public IEnumerator PlayOpening(float elapsedSinceEntry = 0f)
+    {
+        if (hasPlayed) yield break;
+        hasPlayed = true;
+        if (openingLines == null || openingLines.Length == 0) yield break;
+
+        float remainingDelay = Mathf.Max(0f, delay - elapsedSinceEntry);
+        if (remainingDelay > 0f) yield return new WaitForSeconds(remainingDelay);
 
         DialogueManager dm = DialogueManager.Instance;
+        if (dm == null) yield break;
 
-        if (dm == null || dm.IsOpen)
-        {
-            yield break;
-        }
+        // 不覆盖另一段已经打开的对白。
+        while (dm != null && dm.IsOpen) yield return null;
+        if (dm == null) yield break;
 
         dm.StartDialogue(openingLines);
+        while (dm != null && dm.IsOpen) yield return null;
     }
 }

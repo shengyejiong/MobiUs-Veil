@@ -109,6 +109,11 @@ public class StaffUI : MonoBehaviour
         line2 = MakeLine("Line_Programming", new Vector2(0, 10), "程序：" + programming);
         line3 = MakeLine("Line_Art", new Vector2(0, -70), "美术：" + art);
 
+        TextMeshProUGUI assetCredit = MakeLine("Line_AssetCredit", new Vector2(0, -185),
+            "PSX Decals Free by heyheythere - https://heyheythere.itch.io/psx-decals-free - CC BY 4.0\n"
+            + "https://creativecommons.org/licenses/by/4.0/");
+        assetCredit.fontSize = 18;
+
         // ── 返回按钮 ──
         GameObject btnGo = NewUI("StaffCloseButton", panel.transform, out RectTransform brt);
         SetRect(brt, new Vector2(240, 66), new Vector2(0, -300));

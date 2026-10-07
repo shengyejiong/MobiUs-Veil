@@ -15,9 +15,17 @@ public class SceneTransition : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private IEnumerator Start()
     {
+        float entryStartedAt = Time.time;
         playerInput.DeactivateInput();
         yield return screenFader.FadeTo(0f);//等屏幕淡入完成，再执行后续操作
-        playerMovement.SetMovementLocked(false);//解锁玩家移动
+
+        ActOpeningLine opening = FindFirstObjectByType<ActOpeningLine>();
+        if (opening != null && opening.isActiveAndEnabled)
+        {
+            yield return opening.PlayOpening(Time.time - entryStartedAt);
+        }
+
+        playerMovement.SetMovementLocked(false);//开场对白结束后才解锁玩家移动
         playerInput.ActivateInput();
         IsTransitioning = false;
         Debug.Log(GameProgress.GetState(StoryItemId.MessageCard));
@@ -35,6 +43,7 @@ public class SceneTransition : MonoBehaviour
 
     public void GoToNextScene()
     {
+        if (ShadowChase.Instance != null && ShadowChase.Instance.IsDoorSequencePaused) return;
         if (IsTransitioning || Time.timeScale == 0f || (DialogueManager.Instance != null && DialogueManager.Instance.IsOpen == true) || string.IsNullOrWhiteSpace(nextSceneName)) return;
 
         IsTransitioning = true;

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 /// 第三幕：黑影追逐（策划案 330-364 行）
 ///
 /// 规则：
-///   · 玩家唯一的出路就是跑到房门按 E —— 没有攻击、没有躲藏、没有闪避
+///   · 玩家唯一的出路就是跑到打开的房门，走入出口自动触发
 ///   · 黑影从后方逼近，速度比玩家慢（玩家 5），给玩家反应时间和可辨认的出口
 ///   · 被碰到 → 短黑屏 + "你已经知道了。" → 回到床头检查点重来（保留姓名与资料）
 ///   · 对话期间不追；第一次开门循环后，黑影回到起点重新逼近
@@ -49,17 +49,28 @@ public class ShadowChase : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip appearClip;
 
+    [Header("追逐 BGM（黑影出现时切换）")]
+    [SerializeField] private AudioSource bgmSource;
+    [SerializeField] private AudioClip chaseBgm;
+
     private Transform player;
     private PlayerMovement playerMovement;
+    private Rigidbody2D playerBody;
+    private PlayerInput playerInput;
     private SpriteRenderer[] renderers;
     private Animator animator;
     private Vector2 startPosition;
     private float reactTimer;
     private bool caught;
     private bool loopHandled;
+    private SceneTransition sceneTransition;
+    private bool animatorWasEnabled;
+    private bool inputWasActive;
 
     /// <summary>黑影正在追人（B 键会被拦下来）</summary>
     public bool IsChasing { get; private set; }
+    public bool IsCaught => caught;
+    public bool IsDoorSequencePaused { get; private set; }
 
     private void Awake()
     {
@@ -80,8 +91,11 @@ public class ShadowChase : MonoBehaviour
         {
             player = p.transform;
             playerMovement = p.GetComponent<PlayerMovement>();
+            playerBody = p.GetComponent<Rigidbody2D>();
+            playerInput = p.GetComponent<PlayerInput>();
         }
         if (screenFader == null) screenFader = FindFirstObjectByType<ScreenFader>();
+        sceneTransition = FindFirstObjectByType<SceneTransition>();
 
         // 兜底：自动找四块舞台痕迹（它们是隐藏状态，所以不能用 GameObject.Find）
         if (stageTraces == null || stageTraces.Length == 0)
@@ -105,7 +119,8 @@ public class ShadowChase : MonoBehaviour
 
     private void Update()
     {
-        if (caught || player == null) return;
+        if (caught || IsDoorSequencePaused || player == null) return;
+        if (Time.timeScale <= 0f || (sceneTransition != null && sceneTransition.IsTransitioning)) return;
 
         // ---- 什么时候出现：名字写完 + 「是否拿走」询问答完 ----
         if (!IsChasing)
@@ -121,10 +136,7 @@ public class ShadowChase : MonoBehaviour
         // ---- 第一次开门（空间循环）之后：黑影回到起点，重新给反应时间 ----
         if (Act03Story.DoorLooped && !loopHandled)
         {
-            loopHandled = true;
-            transform.position = startPosition;
-            reactTimer = reactTime;
-            Debug.Log("[黑影] 空间循环 → 回到起点重新逼近");
+            RestartAfterDoorLoop();
         }
 
         // ---- 对话期间不追（策划案 345 行）----
@@ -161,9 +173,76 @@ public class ShadowChase : MonoBehaviour
         SetVisible(true);
         reactTimer = reactTime;
 
+        if (bgmSource != null && chaseBgm != null)
+        {
+            bgmSource.Stop();
+            bgmSource.clip = chaseBgm;
+            bgmSource.loop = true;
+            bgmSource.Play();
+        }
+
         if (audioSource != null && appearClip != null) audioSource.PlayOneShot(appearClip);
 
-        Debug.Log("[黑影] 出现了 —— 跑向房门按 E（现在还开不了的话，先写完名字）");
+        Debug.Log("[黑影] 出现了 —— 房门打开，跑向门口自动出门");
+    }
+
+    public void SetDoorSequencePaused(bool paused)
+    {
+        if (IsDoorSequencePaused == paused) return;
+        IsDoorSequencePaused = paused;
+        if (playerInput != null)
+        {
+            if (paused)
+            {
+                inputWasActive = playerInput.inputIsActive;
+                playerInput.DeactivateInput();
+            }
+            else if (inputWasActive) playerInput.ActivateInput();
+        }
+        if (animator != null)
+        {
+            if (paused)
+            {
+                animatorWasEnabled = animator.enabled;
+                animator.enabled = false;
+            }
+            else animator.enabled = animatorWasEnabled;
+        }
+        if (playerMovement != null)
+        {
+            DialogueManager dm = DialogueManager.Instance;
+            playerMovement.SetMovementLocked(paused || (dm != null && dm.IsOpen));
+        }
+    }
+
+    /// <summary>第一次出门循环：主角回到床下检查点，黑影重新从起点逼近。</summary>
+    public void RestartAfterDoorLoop()
+    {
+        if (!IsChasing || caught || player == null) return;
+
+        loopHandled = true;
+        if (playerMovement != null) playerMovement.SetMovementLocked(true);
+        MovePlayerToCheckpoint();
+        transform.position = startPosition;
+        reactTimer = reactTime;
+
+        DialogueManager dm = DialogueManager.Instance;
+        if (playerMovement != null) playerMovement.SetMovementLocked(dm != null && dm.IsOpen);
+        Debug.Log("[黑影] 空间循环 → 主角回到床下，黑影回到起点，继续第二轮追逐");
+    }
+
+    private void MovePlayerToCheckpoint()
+    {
+        if (playerBody != null)
+        {
+            playerBody.linearVelocity = Vector2.zero;
+            playerBody.angularVelocity = 0f;
+            playerBody.position = respawnPosition;
+        }
+        else if (player != null)
+        {
+            player.position = new Vector3(respawnPosition.x, respawnPosition.y, player.position.z);
+        }
     }
 
     /// <summary>被抓：短黑屏 + "你已经知道了。" + 回到床头检查点</summary>
@@ -194,7 +273,7 @@ public class ShadowChase : MonoBehaviour
         }
 
         // ---- 复位 ----
-        if (player != null) player.position = respawnPosition;
+        MovePlayerToCheckpoint();
         transform.position = startPosition;
 
         // 房门与视觉阶段恢复第一轮（策划案 360 行）
@@ -220,6 +299,7 @@ public class ShadowChase : MonoBehaviour
     /// <summary>追逐中按 B 时由 GameMenuController 调用</summary>
     public void ShowCantUseBackpack()
     {
+        if (IsDoorSequencePaused) return;
         Debug.Log("[黑影] 现在无法整理背包");
         DialogueManager dm = DialogueManager.Instance;
         if (dm != null && noBackpackLines != null && noBackpackLines.Length > 0 && !dm.IsOpen)

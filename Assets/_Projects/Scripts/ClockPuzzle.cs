@@ -20,9 +20,22 @@ public class ClockPuzzle : MonoBehaviour
     [SerializeField] private GameObject clockPanel;
     [SerializeField] private TMP_Text feedbackText;
 
+    [Header("首次调钟前的对白")]
+    [SerializeField] private DialogueLine[] beforeAdjustLines;
+
     [Header("正确答案")]
     [SerializeField] private int correctHour = 22;
     [SerializeField] private int correctMinute = 47;
+
+    [Header("滴答声（调到正确时间后停止）")]
+    [SerializeField] private AudioSource tickingBgm;
+
+    [Header("钟表外观")]
+    [SerializeField] private SpriteRenderer clockVisual;
+    [SerializeField] private Sprite initialClockSprite;
+    [SerializeField] private Sprite solvedClockSprite;
+    [SerializeField] private Vector3 loosenedOffset = new Vector3(0.15f, -0.12f, 0f);
+    [SerializeField] private float loosenedAngle = -8f;
 
     [Header("成功反馈")]
     [SerializeField] private AudioSource audioSource;
@@ -53,14 +66,31 @@ public class ClockPuzzle : MonoBehaviour
 
     private bool playerInside;
     private bool wasDialogueOpen;
+    private bool beforeAdjustPending;
     private bool successPending;
     private bool takePending;      // 对话结束后隐藏钟体
     private bool choosing;              // 选项面板是否开着
     private int hintIndex;
+    private Vector3 initialVisualPosition;
+    private Quaternion initialVisualRotation;
 
     /// <summary>挂钟是否已经不在墙上了（在背包里或已放到底座）。</summary>
     private static bool ClockTaken
         => GameProgress.GetState(StoryItemId.Clock) != StoryItemState.Uncollected;
+
+    private void Awake()
+    {
+        if (clockVisual == null) return;
+        initialVisualPosition = clockVisual.transform.localPosition;
+        initialVisualRotation = clockVisual.transform.localRotation;
+    }
+
+    private void Start()
+    {
+        RefreshClockVisual(Act02Story.ClockSolved);
+        if (Act02Story.ClockSolved && tickingBgm != null)
+            tickingBgm.Stop();
+    }
 
     private void Update()
     {
@@ -95,7 +125,7 @@ public class ClockPuzzle : MonoBehaviour
 
         // 钟已经拿走了 → 这里没事可做了
         bool hasSomethingToDo = !ClockTaken;
-        bool canInteract = playerInside && !dm.IsOpen && hasSomethingToDo;
+        bool canInteract = playerInside && !dm.IsOpen && hasSomethingToDo && !beforeAdjustPending;
 
         if (canInteract) InteractionPromptUI.Show(this, transform);
         else InteractionPromptUI.Hide(this);
@@ -121,6 +151,14 @@ public class ClockPuzzle : MonoBehaviour
         // ① 还没解开：开面板调时间
         if (!Act02Story.ClockSolved)
         {
+            if (!Act02Story.ClockIntroPlayed && beforeAdjustLines != null && beforeAdjustLines.Length > 0)
+            {
+                Act02Story.ClockIntroPlayed = true;
+                beforeAdjustPending = true;
+                dm.StartDialogue(beforeAdjustLines);
+                return;
+            }
+
             OpenPanel();
             return;
         }
@@ -244,6 +282,8 @@ public class ClockPuzzle : MonoBehaviour
     private void Solve()
     {
         Act02Story.ClockSolved = true;
+        RefreshClockVisual(true);
+        if (tickingBgm != null) tickingBgm.Stop();
         ClosePanel();                            // 先恢复 timeScale，否则对话不会推进
 
         if (audioSource != null && unlockClip != null)
@@ -262,6 +302,19 @@ public class ClockPuzzle : MonoBehaviour
         Debug.Log("[墙钟] 已拨到 22:47 → 门解锁");
     }
 
+    private void RefreshClockVisual(bool solved)
+    {
+        if (clockVisual == null) return;
+
+        Sprite sprite = solved ? solvedClockSprite : initialClockSprite;
+        if (sprite != null) clockVisual.sprite = sprite;
+
+        Transform visualTransform = clockVisual.transform;
+        visualTransform.localPosition = initialVisualPosition + (solved ? loosenedOffset : Vector3.zero);
+        visualTransform.localRotation = initialVisualRotation
+            * Quaternion.Euler(0f, 0f, solved ? loosenedAngle : 0f);
+    }
+
     private void SetFeedback(string text)
     {
         if (feedbackText != null) feedbackText.text = text;
@@ -269,6 +322,14 @@ public class ClockPuzzle : MonoBehaviour
 
     private void OnDialogueFinished()
     {
+        if (beforeAdjustPending)
+        {
+            beforeAdjustPending = false;
+            if (playerInside && !Act02Story.ClockSolved && !ClockTaken)
+                OpenPanel();
+            return;
+        }
+
         if (successPending)
         {
             successPending = false;
