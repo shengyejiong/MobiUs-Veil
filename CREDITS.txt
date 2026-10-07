@@ -1,0 +1,37 @@
+莫比乌斯之幕：暮色记忆 / MobiUs-Veil
+第三方素材署名与制作来源
+
+PSX Decals Free by heyheythere - https://heyheythere.itch.io/psx-decals-free - CC BY 4.0
+https://creativecommons.org/licenses/by/4.0/
+用于第三幕墙面血手印，调整显示大小、位置和透明度。
+
+Complete and Free PSX UI by ROHHSA - CC0 1.0
+https://rohhsa.itch.io/free-psx-ui
+使用并组合空白面板与选择框。
+
+First Light Particles by Yoiyami - CC0 1.0
+https://opengameart.org/content/first-light-particles-%E2%80%93-cc0-atmospheric-pianoambient-track
+
+Emotional Piano by Centurion_of_war - CC0 1.0
+https://opengameart.org/content/emotional-piano-0
+
+Horror Atmosphere / Post Apocalyptic Wastelands by Juhani Junkala / SubspaceAudio - CC0 1.0
+https://opengameart.org/content/horror-atmosphere
+
+Pursuit / Vicegrip of Pursuit by Sudocolon - CC0 1.0
+https://opengameart.org/content/pursuit
+
+Ticking Clock by AntumDeluge - CC0 1.0
+https://opengameart.org/content/ticking-clock-0
+
+8 wet squish, slurp impacts by Independent.nu (submitted by qubodup) - CC0 1.0
+https://opengameart.org/content/8-wet-squish-slurp-impacts
+
+CC0 1.0 Universal:
+https://creativecommons.org/publicdomain/zero/1.0/
+
+团队提供的制作来源：三张回忆 CG 及主菜单封面使用 GPT Image 2.5 生成。
+团队绘制的角色、道具和地图素材不属于上述 AI 图像清单。
+
+完整说明及待核对事项见 THIRD_PARTY_ASSETS.md。
+ThirdPartyLicenses/ 中保留了相关原始授权说明及许可文本。

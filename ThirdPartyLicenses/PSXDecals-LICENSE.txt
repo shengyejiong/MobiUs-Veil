@@ -1,0 +1,10 @@
+PSX Decals Free - license
+
+Made and licensed by heyheythere (https://heyheythere.itch.io)
+
+PSX Decals Free is licensed under the Creative Commons Attribution 4.0 International License
+(CC BY 4.0), https://creativecommons.org/licenses/by/4.0/. You may use, change and share it,
+commercially too, as long as you give credit. Put this line in your game's credits, or next to the
+files if you share them:
+
+    PSX Decals Free by heyheythere - https://heyheythere.itch.io/psx-decals-free - CC BY 4.0

@@ -123,3 +123,7 @@ InitTestScene*.unity*
 # Unity 崩溃恢复场景，只对本机有意义
 /Assets/_Recovery/
 /Assets/_Recovery.meta
+
+# 原主菜单音乐仅在仓库外私人备份，避免重新提交独立音乐文件
+/Assets/_Projects/Audio/BGM/砂の雫.ogg
+/Assets/_Projects/Audio/BGM/砂の雫.ogg.meta
