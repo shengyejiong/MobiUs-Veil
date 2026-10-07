@@ -45,6 +45,7 @@ public class MainMenuUI : MonoBehaviour
         Act02Story.ResetAll();
         Act03Story.ResetAll();
         GameState.ResetAll();
+        ActThemeTitle.ResetForNewGame();
 
         yield return SceneManager.LoadSceneAsync("Act01_Longing");
     }
