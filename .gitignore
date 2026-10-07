@@ -127,3 +127,7 @@ InitTestScene*.unity*
 # 原主菜单音乐仅在仓库外私人备份，避免重新提交独立音乐文件
 /Assets/_Projects/Audio/BGM/砂の雫.ogg
 /Assets/_Projects/Audio/BGM/砂の雫.ogg.meta
+
+# 原曲发布构建时的本机导入目录；不属于公开源码素材
+/Assets/_LocalBuildAudio/
+/Assets/_LocalBuildAudio.meta

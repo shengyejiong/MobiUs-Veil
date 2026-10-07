@@ -1,6 +1,12 @@
 莫比乌斯之幕：暮色记忆 / MobiUs-Veil
 第三方素材署名与制作来源
 
+原曲构建版主菜单音乐：砂の雫 / Tears of Sand
+作曲：秋山裕和（Hirokazu Akiyama） / H/MIX GALLERY
+https://www.hmix.net/
+使用条款：https://www.hmix.net/terms.html
+此曲适用 H/MIX 使用条款，不属于下列 CC0 素材。公开源码默认版主菜单使用 First Light Particles。
+
 PSX Decals Free by heyheythere - https://heyheythere.itch.io/psx-decals-free - CC BY 4.0
 https://creativecommons.org/licenses/by/4.0/
 用于第三幕墙面血手印，调整显示大小、位置和透明度。

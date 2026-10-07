@@ -35,7 +35,9 @@
 
 部分 CG 和主菜单封面使用 GPT Image 2.5 生成，具体文件列于上述说明；团队绘制的角色、道具和地图素材不在该 AI 图像清单中。
 
-当前版本已将主菜单音乐换为 CC0 素材 First Light Particles。旧 Git 历史及 v1.1.0 标签的音乐文件尚待另行清理；现有中文字体的分发授权也仍需核对。
+公开源码中的主菜单默认使用 CC0 素材 First Light Particles。开发者可通过私人素材构建游戏包，在游戏中使用原曲《砂の雫》，但不在当前源码中提供独立音频下载。旧 Git 历史及 v1.1.0 标签的音乐文件尚待另行清理；现有中文字体的分发授权也仍需核对。
+
+构建时，`Tools → 打包 Windows 版` 使用公开源码中的默认音乐；`Tools → 打包 Windows 版（原主菜单音乐）` 从仓库外的 `../PrivateAssets/Hmix/砂の雫.ogg` 载入原曲，只替换构建过程中的主菜单音乐。私人原曲不随源码提供，第二个命令缺少原曲时会报错。命令行入口为 `BuildWindows.BuildWin64WithPrivateMenuMusic`，可用 `-privateMenuMusic` 指定私人音频路径。
 
 ---
 
