@@ -38,14 +38,10 @@ public class Act04Flow : MonoBehaviour
     [SerializeField] private DialogueLine[] afterMemoryLines;
     [SerializeField] private GameObject stagePedestals;
     [SerializeField] private ScreenFader screenFader;
-    [SerializeField] private GameObject endPanel;
 
     [Header("结局自动切换")]
     [Tooltip("床边结局演完后，自动切换到哪个场景")]
     [SerializeField] private string nextSceneName = "Ending_Reality";
-
-    [Tooltip("结局面板停留多少秒后自动切换（按任意键可提前跳过）")]
-    [SerializeField, Min(0.5f)] private float autoEndSeconds = 2.5f;
 
     [Tooltip("舞台撤具后，玩家 N 秒内没去调查床就自动进结局（0 = 不自动，慢慢逛）")]
     [SerializeField, Min(0f)] private float autoAdvanceSeconds = 5f;
@@ -58,7 +54,6 @@ public class Act04Flow : MonoBehaviour
     public bool IsPlayingSequence { get; private set; }
 
     private bool openingStarted;//��Ļ
-    private bool endInputReady;
     private bool stageCameraActive;
     private CinemachineBlendDefinition savedCameraBlend;
 
@@ -80,25 +75,7 @@ public class Act04Flow : MonoBehaviour
 
     private void Update()
     {
-        if (IsGameEnded)
-        {
-            if (!endInputReady) return;
-
-            bool returnRequested =
-                (Mouse.current != null &&
-                 Mouse.current.leftButton.wasReleasedThisFrame) ||
-                (Keyboard.current != null &&
-                 Keyboard.current.anyKey.wasReleasedThisFrame);
-
-            if (returnRequested)
-            {
-                endInputReady = false;
-                Time.timeScale = 1f;
-                SceneManager.LoadScene(nextSceneName);
-            }
-
-            return;
-        }
+        if (IsGameEnded) return;
 
         if (openingStarted) return;//���ظ�����
 
@@ -333,49 +310,14 @@ public class Act04Flow : MonoBehaviour
 
     private IEnumerator FinishGame()
     {
+        IsGameEnded = true;
         playerInput.DeactivateInput();
         playerMovement.SetMovementLocked(true);
 
         yield return screenFader.FadeTo(1f);
 
-        endPanel.SetActive(true);
-        endPanel.transform.SetAsLastSibling();
-
-        IsGameEnded = true;
-        IsPlayingSequence = false;
-        Time.timeScale = 0f;
-
-        // ★ 自动切换：结局面板停留 autoEndSeconds 秒后自动进下一幕，
-        //   期间按任意键可以提前跳过（不用再傻等按键）
-        //   注意 timeScale = 0，所以计时要用 unscaledDeltaTime
-        float elapsed = 0f;
-        bool skip = false;
-        while (elapsed < autoEndSeconds && !skip)
-        {
-            elapsed += Time.unscaledDeltaTime;
-
-            if (!endInputReady)
-            {
-                // 先等玩家把刚才那一下松开，避免"上床那次按键"直接跳过
-                if ((Keyboard.current == null || !Keyboard.current.anyKey.isPressed) &&
-                    (Mouse.current == null || !Mouse.current.leftButton.isPressed))
-                {
-                    endInputReady = true;
-                }
-            }
-            else if ((Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame) ||
-                     (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame))
-            {
-                skip = true;
-            }
-
-            yield return null;
-        }
-
-        // 时间要恢复，否则新场景是冻结的
         Time.timeScale = 1f;
-        Debug.Log("[第四幕] 结局结束，进入：" + nextSceneName);
-        SceneManager.LoadScene(nextSceneName);
+        yield return SceneManager.LoadSceneAsync(nextSceneName);
     }
 
 }

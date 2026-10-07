@@ -25,6 +25,7 @@ public class ItemPedestal : MonoBehaviour
     }
 
     private bool playerInside;
+    private bool hasInvestigated;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -61,6 +62,15 @@ public class ItemPedestal : MonoBehaviour
     private void Interact(DialogueManager dm)
     {
         StoryItemState state = GameProgress.GetState(requiredItemId);
+
+        // Show the pedestal inscription once before allowing placement.
+        if (state != StoryItemState.Placed && !hasInvestigated &&
+            missingItemLines != null && missingItemLines.Length > 0)
+        {
+            hasInvestigated = true;
+            dm.StartDialogue(missingItemLines);
+            return;
+        }
 
         if(state == StoryItemState.Uncollected)
         {
