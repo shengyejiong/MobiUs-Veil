@@ -10754,7 +10754,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u83AB\u6BD4\u4E4C\u65AF\u4E4B\u5E55\n\u7ED3\u675F"
+  m_text: "\u83AB\u6BD4\u4E4C\u65AF\u4E4B\u5E55\n\u7ED3\u675F\n<size=24>点击或按任意键返回主菜单</size>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 00caefb7ba439db43ab19c4895a6bbd4, type: 2}
   m_sharedMaterial: {fileID: -6069203086365283107, guid: 00caefb7ba439db43ab19c4895a6bbd4, type: 2}

@@ -20,6 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Projects/Scenes/Act04_Stage.unity
     guid: 9c2951336f4ac4c46bd91e34ba9d291a
+  - enabled: 1
+    path: Assets/_Projects/Scenes/Ending_Reality.unity
+    guid: c7a5ba4b15c5464c969fa9cf4c2d7e4c
+  - enabled: 1
+    path: Assets/_Projects/Scenes/Ending_Loop.unity
+    guid: 788654f14d8a4a8f97bcc9294148373a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

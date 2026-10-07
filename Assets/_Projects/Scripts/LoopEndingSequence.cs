@@ -2,6 +2,8 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 /// <summary>独立的暖光循环结尾；复用第一幕布景，不重新开放第一幕任务。</summary>
 public sealed class LoopEndingSequence : MonoBehaviour
@@ -16,6 +18,19 @@ public sealed class LoopEndingSequence : MonoBehaviour
     [SerializeField] private UnityEvent onSequenceFinished = new UnityEvent();
 
     public bool HasFinished { get; private set; }
+    private bool endInputReady;
+
+    private void Update()
+    {
+        if (!HasFinished || !endInputReady) return;
+        bool returnRequested =
+            (Mouse.current != null && Mouse.current.leftButton.wasReleasedThisFrame)
+            || (Keyboard.current != null && Keyboard.current.anyKey.wasReleasedThisFrame);
+        if (!returnRequested) return;
+        endInputReady = false;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
+    }
 
     private IEnumerator Start()
     {
@@ -26,6 +41,7 @@ public sealed class LoopEndingSequence : MonoBehaviour
     {
         Time.timeScale = 1f;
         HasFinished = false;
+        endInputReady = false;
         titleGroup.alpha = 0f;
         caption.text = string.Empty;
         screenFade.alpha = 1f;
@@ -44,6 +60,11 @@ public sealed class LoopEndingSequence : MonoBehaviour
         yield return Fade(titleGroup, 1f);
         HasFinished = true;
         onSequenceFinished.Invoke();
+        yield return new WaitUntil(() =>
+            (Keyboard.current == null || !Keyboard.current.anyKey.isPressed)
+            && (Mouse.current == null || !Mouse.current.leftButton.isPressed));
+        yield return null;
+        endInputReady = true;
     }
 
     private IEnumerator Fade(CanvasGroup group, float target)
