@@ -10,11 +10,11 @@ public class BackpackUI : MonoBehaviour
 
     private void Awake()
     {
-        IsOpen = false;//×î¿ªÊ¼Òş²Ø±³°ü
+        IsOpen = false;//æœ€å¼€å§‹éšè—èƒŒåŒ…
         backpackPanel.SetActive(false);
     }
 
-    [ContextMenu("²âÊÔ/¹Ø±Õ±³°ü")] 
+    [ContextMenu("æµ‹è¯•/å…³é—­èƒŒåŒ…")] 
     public void Open()
     {
         
@@ -22,21 +22,21 @@ public class BackpackUI : MonoBehaviour
         Refresh();
         IsOpen = true;
         backpackPanel.SetActive(true);
-        Time.timeScale = 0f;//ÔİÍ£ÓÎÏ·
+        Time.timeScale = 0f;//æš‚åœæ¸¸æˆ
     }
 
-    [ContextMenu("²âÊÔ/´ò¿ª±³°ü")]
+    [ContextMenu("æµ‹è¯•/æ‰“å¼€èƒŒåŒ…")]
     public void Close()
     {
         if (!IsOpen) return;
         IsOpen = false;
         backpackPanel.SetActive(false);
-        Time.timeScale = 1f;//»Ö¸´ÓÎÏ·
+        Time.timeScale = 1f;//æ¢å¤æ¸¸æˆ
     }
 
     private void Refresh()
     {
-        itemListText.text = string.Empty;//ÏÈÇå¿ÕÓÃÀ´Ë¢ĞÂ×´Ì¬
+        itemListText.text = string.Empty;//å…ˆæ¸…ç©ºç”¨æ¥åˆ·æ–°çŠ¶æ€
         foreach (StoryItemId itemId in System.Enum.GetValues(typeof(StoryItemId)))
         {
             if(GameProgress.GetState(itemId)!= StoryItemState.InBag)
@@ -46,13 +46,13 @@ public class BackpackUI : MonoBehaviour
             switch (itemId)
             {
                 case StoryItemId.MessageCard:
-                    itemListText.text += "ÁôÑÔ¿¨\n";
+                    itemListText.text += "ç•™è¨€å¡\n";
                     break;
                 case StoryItemId.MemorialPlaque:
-                    itemListText.text += "¼ÍÄîÅÆ\n";
+                    itemListText.text += "çºªå¿µç‰Œ\n";
                     break;
                 case StoryItemId.Clock:
-                    itemListText.text += "Ê±ÖÓ\n";
+                    itemListText.text += "æ—¶é’Ÿ\n";
                     break;
                 default:
                     break;
@@ -60,7 +60,7 @@ public class BackpackUI : MonoBehaviour
         }
         if(string.IsNullOrEmpty(itemListText.text))
         {
-            itemListText.text = "±³°üÊÇ¿ÕµÄ";
+            itemListText.text = "èƒŒåŒ…æ˜¯ç©ºçš„";
         }
     }
 }

@@ -8,39 +8,39 @@ public class GameMenuController : MonoBehaviour
     [SerializeField] private Act04Flow act04Flow;
 
     public GameObject gameMenu;
-    public bool isMenuActive = false;//³õÊ¼Ê±¹Ø±Õ²Ëµ¥
+    public bool isMenuActive = false;//åˆå§‹æ—¶å…³é—­èœå•
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        gameMenu.SetActive(isMenuActive); //È·±£²Ëµ¥ÔÚ¿ªÊ¼Ê±¹Ø±Õ
+        gameMenu.SetActive(isMenuActive); //ç¡®ä¿èœå•åœ¨å¼€å§‹æ—¶å…³é—­
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (act04Flow != null && act04Flow.IsGameEnded) return;//Èç¹ûÓÎÏ·ÒÑ¾­½áÊø£¬Ôò²»ÔÊĞí´ò¿ª²Ëµ¥
-        Keyboard keyboard = Keyboard.current;//»ñÈ¡¼üÅÌÊäÈëÒıÓÃ
+        if (act04Flow != null && act04Flow.IsGameEnded) return;//å¦‚æœæ¸¸æˆå·²ç»ç»“æŸï¼Œåˆ™ä¸å…è®¸æ‰“å¼€èœå•
+        Keyboard keyboard = Keyboard.current;//è·å–é”®ç›˜è¾“å…¥å¼•ç”¨
         if(keyboard == null) return;
 
         if(keyboard.escapeKey.wasPressedThisFrame)
         {
             if(backpackUI != null && backpackUI.IsOpen)
             {
-                backpackUI.Close(); //Èç¹û±³°üÒÑ¾­´ò¿ª£¬°´ÏÂESC¼üÔò¹Ø±Õ±³°ü
+                backpackUI.Close(); //å¦‚æœèƒŒåŒ…å·²ç»æ‰“å¼€ï¼ŒæŒ‰ä¸‹ESCé”®åˆ™å…³é—­èƒŒåŒ…
                 if (isMenuActive) Time.timeScale = 0f; // menu still open -> keep paused
-                return;//·ÀÖ¹¶à´¥
+                return;//é˜²æ­¢å¤šè§¦
             }
             if (PauseMenu.Instance != null && PauseMenu.Instance.OnEscape()) return;
 
             if(isMenuActive)
             {
-                ResumeGame(); //Èç¹û²Ëµ¥ÒÑ¾­¼¤»î£¬°´ÏÂESC¼üÔò¹Ø±Õ²Ëµ¥²¢»Ö¸´ÓÎÏ·
+                ResumeGame(); //å¦‚æœèœå•å·²ç»æ¿€æ´»ï¼ŒæŒ‰ä¸‹ESCé”®åˆ™å…³é—­èœå•å¹¶æ¢å¤æ¸¸æˆ
                 return;
             }
-            isMenuActive = !isMenuActive; //ÇĞ»»²Ëµ¥µÄ¼¤»î×´Ì¬
+            isMenuActive = !isMenuActive; //åˆ‡æ¢èœå•çš„æ¿€æ´»çŠ¶æ€
             gameMenu.SetActive(isMenuActive);
-            Time.timeScale = 0;//ÔİÍ£ÓÎÏ·
+            Time.timeScale = 0;//æš‚åœæ¸¸æˆ
         }
         if (act04Flow != null && act04Flow.IsPlayingSequence) return;
         if (keyboard.bKey.wasPressedThisFrame)
@@ -55,16 +55,16 @@ public class GameMenuController : MonoBehaviour
             if (backpackUI == null) return;
             if (backpackUI.IsOpen)
             {
-                backpackUI.Close(); //Èç¹û±³°üÒÑ¾­´ò¿ª£¬°´ÏÂB¼üÔò¹Ø±Õ±³°ü
+                backpackUI.Close(); //å¦‚æœèƒŒåŒ…å·²ç»æ‰“å¼€ï¼ŒæŒ‰ä¸‹Bé”®åˆ™å…³é—­èƒŒåŒ…
                 if (isMenuActive) Time.timeScale = 0f; // menu still open -> keep paused
             }
             else if(isMenuActive || Time.timeScale == 0f || (sceneTransition != null && sceneTransition.IsTransitioning) || (DialogueManager.Instance != null && DialogueManager.Instance.IsOpen))
             {
-                return; //Èç¹û²Ëµ¥ÒÑ¾­¼¤»î£¬°´ÏÂB¼üÔò²»×öÈÎºÎ²Ù×÷
+                return; //å¦‚æœèœå•å·²ç»æ¿€æ´»ï¼ŒæŒ‰ä¸‹Bé”®åˆ™ä¸åšä»»ä½•æ“ä½œ
             }
             else
             {
-                backpackUI.Open(); //Èç¹û±³°üÎ´´ò¿ª£¬°´ÏÂB¼üÔò´ò¿ª±³°ü
+                backpackUI.Open(); //å¦‚æœèƒŒåŒ…æœªæ‰“å¼€ï¼ŒæŒ‰ä¸‹Bé”®åˆ™æ‰“å¼€èƒŒåŒ…
             }
         }
     }
@@ -104,7 +104,7 @@ public class GameMenuController : MonoBehaviour
         if (PauseMenu.Instance != null && PauseMenu.Instance.IsSettingsOpen) PauseMenu.Instance.CloseSubPanels();
 
         isMenuActive = false;
-        gameMenu.SetActive(isMenuActive); //¹Ø±Õ²Ëµ¥
-        Time.timeScale = 1;//»Ö¸´ÓÎÏ·
+        gameMenu.SetActive(isMenuActive); //å…³é—­èœå•
+        Time.timeScale = 1;//æ¢å¤æ¸¸æˆ
     }
 }

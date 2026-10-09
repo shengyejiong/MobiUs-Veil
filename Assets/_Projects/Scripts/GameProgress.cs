@@ -68,10 +68,10 @@ public static class GameProgress
                 }
                 break;
         }
-        return false; // 物品已经拾取或放置，无法再次拾取
+        return false; // 鐗╁搧宸茬粡鎷惧彇鎴栨斁缃紝鏃犳硶鍐嶆鎷惧彇
     }
 
-    //玩家选的物品和需要的物品是否匹配，如果匹配则放置成功，返回true，否则返回false
+    //鐜╁閫夌殑鐗╁搧鍜岄渶瑕佺殑鐗╁搧鏄惁鍖归厤锛屽鏋滃尮閰嶅垯鏀剧疆鎴愬姛锛岃繑鍥瀟rue锛屽惁鍒欒繑鍥瀎alse
     public static bool TryPlace(StoryItemId selectedItemId, StoryItemId requiredItemId)
     {
         switch(selectedItemId)

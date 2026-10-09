@@ -10,14 +10,14 @@ public class SceneTransition : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private string nextSceneName;
 
-    public bool IsTransitioning { get; private set; }//ÓÃÀ´×èÖ¹ÖØ¸´×ª³¡
+    public bool IsTransitioning { get; private set; }//ç”¨æ¥é˜»æ­¢é‡å¤è½¬åœº
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private IEnumerator Start()
     {
         float entryStartedAt = Time.time;
         playerInput.DeactivateInput();
-        yield return screenFader.FadeTo(0f);//µÈÆÁÄ»µ­ÈëÍê³É£¬ÔÙÖ´ĞĞºóĞø²Ù×÷
+        yield return screenFader.FadeTo(0f);//ç­‰å±å¹•æ·¡å…¥å®Œæˆï¼Œå†æ‰§è¡Œåç»­æ“ä½œ
 
         ActOpeningLine opening = FindFirstObjectByType<ActOpeningLine>();
         if (opening != null && opening.isActiveAndEnabled)
@@ -25,7 +25,7 @@ public class SceneTransition : MonoBehaviour
             yield return opening.PlayOpening(Time.time - entryStartedAt);
         }
 
-        playerMovement.SetMovementLocked(false);//¿ª³¡¶Ô°×½áÊøºó²Å½âËøÍæ¼ÒÒÆ¶¯
+        playerMovement.SetMovementLocked(false);//å¼€åœºå¯¹ç™½ç»“æŸåæ‰è§£é”ç©å®¶ç§»åŠ¨
         playerInput.ActivateInput();
         IsTransitioning = false;
         Debug.Log(GameProgress.GetState(StoryItemId.MessageCard));
@@ -35,10 +35,10 @@ public class SceneTransition : MonoBehaviour
 
     private void Awake()
     {
-        Time.timeScale = 1f;//È·±£ÓÎÏ·Ê±¼äÕı³£ÔËĞĞ
+        Time.timeScale = 1f;//ç¡®ä¿æ¸¸æˆæ—¶é—´æ­£å¸¸è¿è¡Œ
         IsTransitioning = true;
         screenFader.canvasGroup.alpha = 1f;
-        playerMovement.SetMovementLocked(true);//Ëø¶¨Íæ¼ÒÒÆ¶¯
+        playerMovement.SetMovementLocked(true);//é”å®šç©å®¶ç§»åŠ¨
     }
 
     public void GoToNextScene()

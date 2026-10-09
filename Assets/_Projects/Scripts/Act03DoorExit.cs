@@ -30,7 +30,7 @@ public class Act03DoorExit : MonoBehaviour
     [Header("舞台痕迹（第一次开门后出现）")]
     [SerializeField] private GameObject[] stageTraces;
 
-    [Header("音效（可选，留空也能跑）")]
+    [Header("音效")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip doorClip;
 

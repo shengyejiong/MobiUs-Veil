@@ -8,7 +8,7 @@ public class BedEnding : MonoBehaviour
     [SerializeField] private DialogueLine[] bedLines;
 
     private bool playerInside;
-    private bool readyToSleep;//Õâ´Î¿¿½ü´²ÊÇ·ñÒÑ¾­µ÷²é¹ı
+    private bool readyToSleep;//è¿™æ¬¡é è¿‘åºŠæ˜¯å¦å·²ç»è°ƒæŸ¥è¿‡
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -30,11 +30,11 @@ public class BedEnding : MonoBehaviour
     private void Update()
     {
         if (act04Flow == null || act04Flow.IsPlayingSequence) return;
-        if (!playerInside) return;// Ö»ÓĞÍæ¼ÒÔÚ´¥·¢Æ÷ÄÚ²ÅÔÊĞí½»»¥
+        if (!playerInside) return;// åªæœ‰ç©å®¶åœ¨è§¦å‘å™¨å†…æ‰å…è®¸äº¤äº’
 
-        DialogueManager dm = DialogueManager.Instance;// »ñÈ¡¶Ô»°¹ÜÀíÆ÷ÊµÀı
+        DialogueManager dm = DialogueManager.Instance;// è·å–å¯¹è¯ç®¡ç†å™¨å®ä¾‹
         if (dm == null || dm.IsOpen || Time.timeScale == 0f) return;
-        if (Time.frameCount == dm.LastStateChangeFrame) return;// ·ÀÖ¹ÔÚÍ¬Ò»Ö¡ÄÚÖØ¸´´¥·¢¶Ô»°
+        if (Time.frameCount == dm.LastStateChangeFrame) return;// é˜²æ­¢åœ¨åŒä¸€å¸§å†…é‡å¤è§¦å‘å¯¹è¯
 
         if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
         {
@@ -45,14 +45,14 @@ public class BedEnding : MonoBehaviour
 
     private void Interact(DialogueManager dm)
     {
-        //´²»¹Ã»¿ª·Å
+        //åºŠè¿˜æ²¡å¼€æ”¾
         if (!act04Flow.CanUseBed)
         {
             dm.StartDialogue(lockedLines);
             return;
         }
 
-        //´²ÒÑ¿ª·Å£¬µÚÒ»´Î°´ E£ºÏÈµ÷²é¡£
+        //åºŠå·²å¼€æ”¾ï¼Œç¬¬ä¸€æ¬¡æŒ‰ Eï¼šå…ˆè°ƒæŸ¥ã€‚
         if (!readyToSleep)
         {
             readyToSleep = true;
@@ -60,7 +60,7 @@ public class BedEnding : MonoBehaviour
             return;
         }
 
-        //ÒÑµ÷²é£¬ÔÙ°´Ò»´ÎĞÂµÄ E£ºÈ·ÈÏÉÏ´²¡£
+        //å·²è°ƒæŸ¥ï¼Œå†æŒ‰ä¸€æ¬¡æ–°çš„ Eï¼šç¡®è®¤ä¸ŠåºŠã€‚
         readyToSleep = false;
         act04Flow.EndGame();
     }

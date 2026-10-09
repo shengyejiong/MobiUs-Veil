@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 public class ScreenFader : MonoBehaviour
 {
     public CanvasGroup canvasGroup;
-    public float fadeDuration = 4f;//½¥±äÊ±³¤
-    public float targetAlpha = 1f;//Ä¿±êÍ¸Ã÷¶È
+    public float fadeDuration = 4f;//æ¸å˜æ—¶é•¿
+    public float targetAlpha = 1f;//ç›®æ ‡é€æ˜åº¦
    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,13 +24,13 @@ public class ScreenFader : MonoBehaviour
 
     public IEnumerator FadeTo(float targetAlpha)
     {
-        float startAlpha = canvasGroup.alpha;//¼ÇÂ¼×î¿ªÊ¼Í¸Ã÷¶È
+        float startAlpha = canvasGroup.alpha;//è®°å½•æœ€å¼€å§‹é€æ˜åº¦
         float elapsedTime = 0f;
         while (elapsedTime < fadeDuration)
         {
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / fadeDuration;
-            canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);//¼ÆËãµ±Ç°Í¸Ã÷¶È
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);//è®¡ç®—å½“å‰é€æ˜åº¦
             yield return null;
         }
         canvasGroup.alpha = targetAlpha;

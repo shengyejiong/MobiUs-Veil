@@ -1,4 +1,4 @@
-﻿﻿﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -11,12 +11,12 @@ public class Act04Flow : MonoBehaviour
     [SerializeField] private float openDistance = 16.5f;
     [SerializeField] private float openDuration = 2f;
 
-    [Header("Ļ������ǽ��")]
+    [Header("幕布与遮挡墙体")]
     [SerializeField] private Transform coveringCurtain;
     [SerializeField, Min(0.1f)] private float coverDuration = 0.8f;
     [SerializeField] private GameObject stageStep;
 
-    [Header("��̨��ͷ")]
+    [Header("舞台镜头")]
     [SerializeField] private CinemachineCamera stageCamera;
     [SerializeField] private CinemachineBrain cameraBrain;
     [SerializeField, Min(0.1f)] private float cameraBlendDuration = 2f;
@@ -24,7 +24,7 @@ public class Act04Flow : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private SpriteRenderer memoryDisplay;
 
-    [Header("���仭�浭�뵭��")]
+    [Header("回忆画面淡入淡出")]
     [SerializeField] private Sprite memoryOneSprite;
     [SerializeField] private Sprite memoryTwoSprite;
     [SerializeField] private Sprite memoryThreeSprite;
@@ -49,11 +49,11 @@ public class Act04Flow : MonoBehaviour
     public bool IsGameEnded { get; private set; }
     private Vector3 closedCurtainPosition;
 
-    public bool CanUseBed { get; private set; }//��������Ļ�Ƿ��Ѿ�����
+    public bool CanUseBed { get; private set; }//整个第四幕是否已经演完
 
     public bool IsPlayingSequence { get; private set; }
 
-    private bool openingStarted;//��Ļ
+    private bool openingStarted;//开幕
     private bool stageCameraActive;
     private CinemachineBlendDefinition savedCameraBlend;
 
@@ -77,7 +77,7 @@ public class Act04Flow : MonoBehaviour
     {
         if (IsGameEnded) return;
 
-        if (openingStarted) return;//���ظ�����
+        if (openingStarted) return;//防重复播放
 
         DialogueManager dm = DialogueManager.Instance;
         if (dm == null || dm.IsOpen || Time.timeScale == 0f) return;

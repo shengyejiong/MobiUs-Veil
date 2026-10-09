@@ -10,7 +10,7 @@ public class ItemPedestal : MonoBehaviour
     [SerializeField] private DialogueLine[] alreadyPlacedLines;
     [SerializeField] private Act04Flow act04Flow;
 
-    [Header("ÒÑ·ÅÖÃÎïÆ·µÄÏÔÊ¾")]
+    [Header("å·²æ”¾ç½®ç‰©å“çš„æ˜¾ç¤º")]
     [SerializeField] private SpriteRenderer placedItemRenderer;
 
     private void Start()
@@ -46,11 +46,11 @@ public class ItemPedestal : MonoBehaviour
     private void Update()
     {
         if (act04Flow != null && act04Flow.IsPlayingSequence) return;
-        if (!playerInside) return;// Ö»ÓĞÍæ¼ÒÔÚ´¥·¢Æ÷ÄÚ²ÅÔÊĞí½»»¥
+        if (!playerInside) return;// åªæœ‰ç©å®¶åœ¨è§¦å‘å™¨å†…æ‰å…è®¸äº¤äº’
 
-        DialogueManager dm = DialogueManager.Instance;// »ñÈ¡¶Ô»°¹ÜÀíÆ÷ÊµÀı
+        DialogueManager dm = DialogueManager.Instance;// è·å–å¯¹è¯ç®¡ç†å™¨å®ä¾‹
         if (dm == null || dm.IsOpen || Time.timeScale == 0f) return;
-        if (Time.frameCount == dm.LastStateChangeFrame) return;// ·ÀÖ¹ÔÚÍ¬Ò»Ö¡ÄÚÖØ¸´´¥·¢¶Ô»°
+        if (Time.frameCount == dm.LastStateChangeFrame) return;// é˜²æ­¢åœ¨åŒä¸€å¸§å†…é‡å¤è§¦å‘å¯¹è¯
 
         if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
         {
@@ -91,7 +91,7 @@ public class ItemPedestal : MonoBehaviour
 
     }
 
-    [ContextMenu("²âÊÔ/»ñµÃÈı¼ş´ú±íÎï")]
+    [ContextMenu("æµ‹è¯•/è·å¾—ä¸‰ä»¶ä»£è¡¨ç‰©")]
     private void DebugCollectItems()
     {
         if (!Application.isPlaying) return;

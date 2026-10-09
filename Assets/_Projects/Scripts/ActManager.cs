@@ -31,11 +31,11 @@ public class ActManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Keyboard keyboard = Keyboard.current;//»ñÈ¡¼üÅÌÊäÈëÒıÓÃ
+        Keyboard keyboard = Keyboard.current;//è·å–é”®ç›˜è¾“å…¥å¼•ç”¨
         if (keyboard == null || gameMenuController.isMenuActive) return;
         if(keyboard.nKey.wasPressedThisFrame)
         {
-            EnterDusk();//°´ÏÂN¼üÇĞ»»µ½»Æ»è³¡¾°
+            EnterDusk();//æŒ‰ä¸‹Né”®åˆ‡æ¢åˆ°é»„æ˜åœºæ™¯
         }
     }
 
@@ -44,8 +44,8 @@ public class ActManager : MonoBehaviour
         if(currentSceneState != sceneState.Dusk && !isTransition)
         {
             isTransition = true;
-            playerRigidbody.linearVelocity = Vector2.zero; //ÖØÖÃÍæ¼ÒµÄËÙ¶È
-            StartCoroutine(TransitionToDusk()); //¿ªÊ¼³¡¾°ÇĞ»»Ğ­³Ì
+            playerRigidbody.linearVelocity = Vector2.zero; //é‡ç½®ç©å®¶çš„é€Ÿåº¦
+            StartCoroutine(TransitionToDusk()); //å¼€å§‹åœºæ™¯åˆ‡æ¢åç¨‹
 
         }
     }
@@ -53,19 +53,19 @@ public class ActManager : MonoBehaviour
     public void ApplyDuskState()
     {
         currentSceneState = sceneState.Dusk;
-        Debug.Log("ÇĞ»»µ½»Æ»è³¡¾°");
-        roomlight.intensity = 0.7f; //½µµÍµÆ¹âÇ¿¶È
-        roomlight.color = duskColor; //¸Ä±äµÆ¹âÑÕÉ«Îª»Æ»èÉ«
-        playerRigidbody.position = duskSpawnPoint.position; //½«Íæ¼Ò´«ËÍµ½»Æ»è³¡¾°µÄ³öÉúµã
+        Debug.Log("åˆ‡æ¢åˆ°é»„æ˜åœºæ™¯");
+        roomlight.intensity = 0.7f; //é™ä½ç¯å…‰å¼ºåº¦
+        roomlight.color = duskColor; //æ”¹å˜ç¯å…‰é¢œè‰²ä¸ºé»„æ˜è‰²
+        playerRigidbody.position = duskSpawnPoint.position; //å°†ç©å®¶ä¼ é€åˆ°é»„æ˜åœºæ™¯çš„å‡ºç”Ÿç‚¹
     }
 
     public IEnumerator TransitionToDusk()
     {
-        playerInput.DeactivateInput(); //½ûÓÃÍæ¼ÒÊäÈë
-        yield return screenFader.FadeTo(1f); //ÆÁÄ»½¥±äµ½ºÚÉ«
-        ApplyDuskState(); //Ó¦ÓÃ»Æ»è³¡¾°×´Ì¬
-        yield return screenFader.FadeTo(0f); //ÆÁÄ»½¥±ä»ØÕı³£
-        playerInput.ActivateInput(); //ÖØĞÂÆôÓÃÍæ¼ÒÊäÈë
+        playerInput.DeactivateInput(); //ç¦ç”¨ç©å®¶è¾“å…¥
+        yield return screenFader.FadeTo(1f); //å±å¹•æ¸å˜åˆ°é»‘è‰²
+        ApplyDuskState(); //åº”ç”¨é»„æ˜åœºæ™¯çŠ¶æ€
+        yield return screenFader.FadeTo(0f); //å±å¹•æ¸å˜å›æ­£å¸¸
+        playerInput.ActivateInput(); //é‡æ–°å¯ç”¨ç©å®¶è¾“å…¥
         isTransition = false;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUI : MonoBehaviour
 {
-    [Header("¿ªÊ¼ÓÎÏ·×ª³¡")]
+    [Header("å¼€å§‹æ¸¸æˆè½¬åœº")]
     [SerializeField] private CanvasGroup menuFade;
     [SerializeField] private CanvasGroup menuContent;
     [SerializeField, Min(0.1f)] private float fadeOutSeconds = 1.2f;
@@ -52,7 +52,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void QuitGame()
     {
-        Debug.Log("ÍË³öÓÎÏ·");
-        Application.Quit();//ÍË³öÓÎÏ·
+        Debug.Log("é€€å‡ºæ¸¸æˆ");
+        Application.Quit();//é€€å‡ºæ¸¸æˆ
     }
 }
