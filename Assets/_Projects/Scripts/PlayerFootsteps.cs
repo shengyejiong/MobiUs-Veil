@@ -9,7 +9,7 @@ public sealed class PlayerFootsteps : MonoBehaviour
     [Header("木地板脚步声")]
     [SerializeField] private AudioClip[] woodClips;
     [SerializeField, Min(0.05f)] private float stepInterval = 0.32f;
-    [SerializeField, Range(0f, 1f)] private float volume = 0.18f;
+    [SerializeField, Range(0f, 1f)] private float volume = 0.25f;
 
     private Rigidbody2D body;
     private PlayerMovement movement;
