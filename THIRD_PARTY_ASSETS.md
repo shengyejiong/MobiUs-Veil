@@ -31,7 +31,7 @@
 
 ## 音乐与音效
 
-以下七项来源页面均标明 **CC0**，无需强制署名。这里保留作者与来源记录。许可文本见 [ThirdPartyLicenses/CC0-1.0.txt](ThirdPartyLicenses/CC0-1.0.txt)。项目中部分音频转换为 OGG，以减小文件体积。木地板脚步声的来源与许可于 2026-10-10 补充核对。
+以下八项来源页面均标明 **CC0**，无需强制署名。这里保留作者与来源记录。许可文本见 [ThirdPartyLicenses/CC0-1.0.txt](ThirdPartyLicenses/CC0-1.0.txt)。项目中部分音频转换为 OGG，以减小文件体积。木地板脚步声与夏日树叶风声的来源与许可于 2026-10-10 补充核对。
 
 | 名称 | 作者 / 发布者 | 工程文件 | 来源 |
 | --- | --- | --- | --- |
@@ -42,8 +42,11 @@
 | Ticking Clock | AntumDeluge | `Audio/BGM/ticking_clock.ogg` | [OpenGameArt](https://opengameart.org/content/ticking-clock-0) |
 | 8 wet squish, slurp impacts | Independent.nu；提交者 qubodup | `Audio/SFX/impactsplat03.mp3` | [OpenGameArt](https://opengameart.org/content/8-wet-squish-slurp-impacts) |
 | Different steps on wood, stone, leaves, gravel and mud | TinyWorlds | `Audio/SFX/FootstepsWood/wood01.ogg`、`wood02.ogg`、`wood03.ogg` | [OpenGameArt / LPC](https://lpc.opengameart.org/content/different-steps-on-wood-stone-leaves-gravel-and-mud) |
+| Leaves_Rustling_Edited.wav | AmberdeMeillon | `Audio/Ambience/leaves_rustling_loop.wav` | [Freesound](https://freesound.org/people/AmberdeMeillon/sounds/443065/) |
 
 表中工程文件路径均相对于 `Assets/_Projects/`。滴答声音效原附的 `ticking_clock_LICENSE.txt` 仍保留在资源目录中。
+
+夏日树叶风声使用该页面的公开 OGG 试听文件，未取得原始 WAV。处理时将首尾交叉淡化 0.4 秒，并提高音量，使峰值保持在约 −3.1 dBFS；原下载文件保留在工程外。此短循环以 PCM 导入，具体参数和来源见 `Assets/_Projects/Audio/Ambience/README.txt`。
 
 ## 生成式 AI 图像
 

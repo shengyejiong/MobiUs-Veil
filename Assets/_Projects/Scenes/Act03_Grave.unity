@@ -218,15 +218,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Player A '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 00caefb7ba439db43ab19c4895a6bbd4, type: 2}
+  m_sharedMaterial: {fileID: -6069203086365283107, guid: 00caefb7ba439db43ab19c4895a6bbd4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281677134
-  m_fontColor: {r: 0.3056603, g: 0.20934846, b: 0.20934846, a: 1}
+    rgba: 4287418879
+  m_fontColor: {r: 1, g: 0.82, b: 0.55, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -243,13 +243,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 34
+  m_fontSizeBase: 34
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -322,8 +322,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -22.864}
-  m_SizeDelta: {x: -64, y: 205.97}
+  m_AnchoredPosition: {x: 0, y: -23.2914}
+  m_SizeDelta: {x: -64, y: 182.8911}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &135774304
 CanvasRenderer:
@@ -355,15 +355,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Where i am ?
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 00caefb7ba439db43ab19c4895a6bbd4, type: 2}
+  m_sharedMaterial: {fileID: -6069203086365283107, guid: 00caefb7ba439db43ab19c4895a6bbd4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4293980400
+  m_fontColor: {r: 0.94, g: 0.94, b: 0.94, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -380,8 +380,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 85
-  m_fontSizeBase: 85
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 8
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -1288,7 +1288,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5.5424194, y: -347.70728}
+  m_AnchoredPosition: {x: -5.5473633, y: -347.70996}
   m_SizeDelta: {x: -11.0948, y: -695.4146}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &496643748
@@ -1304,7 +1304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.06, g: 0.07, b: 0.11, a: 0.92}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5231,7 +5231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractionTrigger
   dialogueLines:
   - speaker: "\u7A97\u6237"
-    content: "\u201C\u7A97\u5E18\u540E\u9762\u6CA1\u6709\u5149\u4E86\u3002\u201D"
+    content: "\u201C\u7A97\u5E18\u540E\u9762\u53EA\u6709\u60E8\u767D\u7684\u6708\u5149\u3002\u201D"
   secondLines: []
   repeatable: 0
 --- !u!1 &892000070
@@ -10630,15 +10630,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Click to go on '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 00caefb7ba439db43ab19c4895a6bbd4, type: 2}
+  m_sharedMaterial: {fileID: -6069203086365283107, guid: 00caefb7ba439db43ab19c4895a6bbd4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 2365587455
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.55}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -10655,8 +10655,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

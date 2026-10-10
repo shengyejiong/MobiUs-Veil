@@ -40,6 +40,10 @@ Different steps on wood, stone, leaves, gravel and mud by TinyWorlds - CC0 1.0
 https://lpc.opengameart.org/content/different-steps-on-wood-stone-leaves-gravel-and-mud
 使用 wood01.ogg、wood02.ogg、wood03.ogg 作为木地板脚步声。
 
+Leaves_Rustling_Edited.wav by AmberdeMeillon - CC0 1.0
+https://freesound.org/people/AmberdeMeillon/sounds/443065/
+使用公开 OGG 试听版制作第一幕窗外树叶风声，处理循环首尾并提高音量。
+
 团队提供的制作来源：三张回忆 CG 及主菜单封面使用 GPT Image 2.5 生成。
 团队绘制的角色、道具和地图素材不属于上述 AI 图像清单。
 
