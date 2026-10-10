@@ -576,6 +576,7 @@ GameObject:
   - component: {fileID: 211366847}
   - component: {fileID: 211366846}
   - component: {fileID: 211366849}
+  - component: {fileID: 211366870}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -781,6 +782,24 @@ MonoBehaviour:
   moveSpeed: 3
   animator: {fileID: 1456111475}
   visualRenderer: {fileID: 1456111474}
+--- !u!114 &211366870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211366842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6542c7da6ee4384ba24309c340023d6, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerFootsteps
+  woodClips:
+  - {fileID: 8300000, guid: 628ae355475544b7a1698bebae8ba341, type: 3}
+  - {fileID: 8300000, guid: 0f46ce1818bf441daa6914cb8ac180f2, type: 3}
+  - {fileID: 8300000, guid: f5f345f4c4af4530bcc9ac55e4e8b82b, type: 3}
+  stepInterval: 0.32
+  volume: 0.18
 --- !u!1 &229550511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1417,7 +1436,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5.5474243, y: -347.70996}
+  m_AnchoredPosition: {x: -5.5473633, y: -347.70996}
   m_SizeDelta: {x: -11.0948, y: -695.4146}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &496643748
@@ -9095,7 +9114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2912187293906498017, guid: ed0bc333b914ca3488b0c7308d8cbfda, type: 3}
       propertyPath: m_Size.y
-      value: 1.177983
+      value: 0.67339855
       objectReference: {fileID: 0}
     - target: {fileID: 2912187293906498017, guid: ed0bc333b914ca3488b0c7308d8cbfda, type: 3}
       propertyPath: m_Offset.x
@@ -9103,7 +9122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2912187293906498017, guid: ed0bc333b914ca3488b0c7308d8cbfda, type: 3}
       propertyPath: m_Offset.y
-      value: -0.09673235
+      value: 0.15555987
       objectReference: {fileID: 0}
     - target: {fileID: 2912187293906498017, guid: ed0bc333b914ca3488b0c7308d8cbfda, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x

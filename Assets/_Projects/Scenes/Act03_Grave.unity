@@ -530,6 +530,7 @@ GameObject:
   - component: {fileID: 211366847}
   - component: {fileID: 211366846}
   - component: {fileID: 211366849}
+  - component: {fileID: 211366870}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -596,6 +597,24 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &211366870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211366842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6542c7da6ee4384ba24309c340023d6, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerFootsteps
+  woodClips:
+  - {fileID: 8300000, guid: 628ae355475544b7a1698bebae8ba341, type: 3}
+  - {fileID: 8300000, guid: 0f46ce1818bf441daa6914cb8ac180f2, type: 3}
+  - {fileID: 8300000, guid: f5f345f4c4af4530bcc9ac55e4e8b82b, type: 3}
+  stepInterval: 0.32
+  volume: 0.18
 --- !u!4 &211366844
 Transform:
   m_ObjectHideFlags: 0

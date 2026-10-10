@@ -50,6 +50,7 @@ public class PickupItem : MonoBehaviour
 
     private void Update()
     {
+#if UNITY_EDITOR
         // ===== 临时调试：按 B 打印三件道具状态（以后这里换成正式背包面板）=====
         if (Keyboard.current != null && Keyboard.current.bKey.wasPressedThisFrame)
         {
@@ -59,6 +60,7 @@ public class PickupItem : MonoBehaviour
                       $"纪念牌={GameProgress.GetState(StoryItemId.MemorialPlaque)}");
         }
 
+#endif
         DialogueManager dm = DialogueManager.Instance;
 
         if (dm == null)

@@ -31,7 +31,7 @@
 
 ## 音乐与音效
 
-以下六项来源页面均标明 **CC0**，无需强制署名。这里保留作者与来源记录。许可文本见 [ThirdPartyLicenses/CC0-1.0.txt](ThirdPartyLicenses/CC0-1.0.txt)。项目中部分音频转换为 OGG，以减小文件体积。
+以下七项来源页面均标明 **CC0**，无需强制署名。这里保留作者与来源记录。许可文本见 [ThirdPartyLicenses/CC0-1.0.txt](ThirdPartyLicenses/CC0-1.0.txt)。项目中部分音频转换为 OGG，以减小文件体积。木地板脚步声的来源与许可于 2026-10-10 补充核对。
 
 | 名称 | 作者 / 发布者 | 工程文件 | 来源 |
 | --- | --- | --- | --- |
@@ -41,6 +41,7 @@
 | Pursuit / Vicegrip of Pursuit | Sudocolon | `Audio/BGM/Vicegrip of Pursuit.mp3` | [OpenGameArt](https://opengameart.org/content/pursuit) |
 | Ticking Clock | AntumDeluge | `Audio/BGM/ticking_clock.ogg` | [OpenGameArt](https://opengameart.org/content/ticking-clock-0) |
 | 8 wet squish, slurp impacts | Independent.nu；提交者 qubodup | `Audio/SFX/impactsplat03.mp3` | [OpenGameArt](https://opengameart.org/content/8-wet-squish-slurp-impacts) |
+| Different steps on wood, stone, leaves, gravel and mud | TinyWorlds | `Audio/SFX/FootstepsWood/wood01.ogg`、`wood02.ogg`、`wood03.ogg` | [OpenGameArt / LPC](https://lpc.opengameart.org/content/different-steps-on-wood-stone-leaves-gravel-and-mud) |
 
 表中工程文件路径均相对于 `Assets/_Projects/`。滴答声音效原附的 `ticking_clock_LICENSE.txt` 仍保留在资源目录中。
 

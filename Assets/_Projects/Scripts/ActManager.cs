@@ -29,6 +29,7 @@ public class ActManager : MonoBehaviour
     }
 
     // Update is called once per frame
+#if UNITY_EDITOR
     void Update()
     {
         Keyboard keyboard = Keyboard.current;//获取键盘输入引用
@@ -39,6 +40,7 @@ public class ActManager : MonoBehaviour
         }
     }
 
+#endif
     public void EnterDusk()
     {
         if(currentSceneState != sceneState.Dusk && !isTransition)
