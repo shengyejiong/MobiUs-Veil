@@ -128,6 +128,7 @@ public class PauseMenu : MonoBehaviour
 
         SyncFromSaved();
         settingsPanel.SetActive(true);
+        settingsPanel.transform.SetAsLastSibling();
         Time.timeScale = 0f;            // 面板打开时暂停（策划案 227 行）
     }
 

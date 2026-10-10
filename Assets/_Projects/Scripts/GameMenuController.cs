@@ -40,6 +40,7 @@ public class GameMenuController : MonoBehaviour
             }
             isMenuActive = !isMenuActive; //切换菜单的激活状态
             gameMenu.SetActive(isMenuActive);
+            gameMenu.transform.SetAsLastSibling();
             Time.timeScale = 0;//暂停游戏
         }
         if (act04Flow != null && act04Flow.IsPlayingSequence) return;
