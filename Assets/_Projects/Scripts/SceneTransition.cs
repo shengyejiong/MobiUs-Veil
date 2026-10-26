@@ -59,6 +59,7 @@ public class SceneTransition : MonoBehaviour
         yield return SceneManager.LoadSceneAsync(nextSceneName);
     }
 
+#if UNITY_EDITOR
     private void Update()
     {
         if(Keyboard.current != null)
@@ -81,4 +82,5 @@ public class SceneTransition : MonoBehaviour
             }
         }
     }
+#endif
 }

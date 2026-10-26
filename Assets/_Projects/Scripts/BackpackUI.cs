@@ -22,6 +22,7 @@ public class BackpackUI : MonoBehaviour
         Refresh();
         IsOpen = true;
         backpackPanel.SetActive(true);
+        backpackPanel.transform.SetAsLastSibling();
         Time.timeScale = 0f;//暂停游戏
     }
 

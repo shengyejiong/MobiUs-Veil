@@ -44,7 +44,7 @@ public class Act04Flow : MonoBehaviour
     [SerializeField] private string nextSceneName = "Ending_Reality";
 
     [Tooltip("舞台撤具后，玩家 N 秒内没去调查床就自动进结局（0 = 不自动，慢慢逛）")]
-    [SerializeField, Min(0f)] private float autoAdvanceSeconds = 5f;
+    [SerializeField, Min(0f)] private float autoAdvanceSeconds = 90f;
 
     public bool IsGameEnded { get; private set; }
     private Vector3 closedCurtainPosition;
